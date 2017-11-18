@@ -4,13 +4,12 @@ default_health(100).
 default_hunger(20).
 default_thirst(50).
 default_weapon(nothing).
-default_weapon(nothing).
 default_item_list([]).
 
 random_location(X, Y) :-
   repeat,
   random(1, 11, A), random(1, 21, B),
-  grid(A, B, Loc), 
+  grid(A, B, Loc),
   Loc \== blank,
   X is A, Y is B.
 
@@ -26,8 +25,15 @@ init_player:-
 
 % Health
 increase_health( Amount):-
-  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
   ResultHealth is Health+Amount,
+  ResultHealth > 100,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  asserta(player(X,Y,100,Hunger,Thirst,Weapon,ItemList)).
+increase_health( Amount):-
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+  ResultHealth is Health+Amount,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 decrease_health(Amount):-
@@ -43,9 +49,16 @@ set_health(Health):-
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 % Hunger
-increase_hunger( Amount):-
-  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+increase_hunger(Amount):-
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
   ResultHunger is Hunger+Amount,
+  ResultHunger > 50,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  asserta(player(X,Y,Health,50,Thirst,Weapon,ItemList)), !.
+increase_hunger(Amount):-
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+  ResultHunger is Hunger+Amount,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,ResultHunger,Thirst,Weapon,ItemList)).
 
 decrease_hunger(Amount):-
@@ -62,8 +75,15 @@ set_hunger(Hunger):-
 
 % Thirst
 increase_thirst(Amount):-
-  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
   ResultThirst is Thirst+Amount,
+  ResultThirst > 50,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  asserta(player(X,Y,Health,Hunger,50,Weapon,ItemList)), !.
+increase_thirst(Amount):-
+  player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+  ResultThirst is Thirst+Amount,
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,Hunger,ResultThirst,Weapon,ItemList)).
 
 decrease_thirst(Amount):-
@@ -81,6 +101,7 @@ set_thirst(Thirst):-
 % Weapon
 set_weapon(Weapon):-
   retract(player(X,Y,Health,Hunger,Thirst,CurrentWeapon,ItemList)),
+  asserta(location(X, Y, CurrentWeapon)),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 get_weapon(Weapon):-
@@ -91,6 +112,17 @@ add_item(Item):-
   retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   append([Item],ItemList,NewItemList),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+
+del_item(Item):-
+  retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
+  delete_one(Item,ItemList,NewItemList),
+  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+
+/* Command for delete one item */
+delete_one(_, [], []).
+delete_one(Term, [Term|Tail], Tail) :- !.
+delete_one(Term, [Head|Tail], [Head|Result]) :-
+  delete_one(Term, Tail, Result).
 
 get_item_list(ItemList):-
   player(_,_,_,_,_,_,ItemList).

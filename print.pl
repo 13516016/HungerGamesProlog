@@ -1,21 +1,17 @@
-
+/*print map*/
 print_map(11,20):- !.
 print_map(11,Y):-
   Y2 is Y+1,nl,
-  print_map(0,Y2),!.
-
+  print_map(-1,Y2),!.
 print_map(X,Y):-
-  Y=0, X2 is X+1 ,print_border,!,
+  Y= -1, X2 is X+1 ,print_border,!,
   print_map(X2,Y).
-
 print_map(X,Y):-
   Y=20,X2 is X+1, print_border,!,
   print_map(X2,Y).
-
 print_map(X,Y):-
-  X=0,X2 is X+1, print_border,!,
+  X= -1,X2 is X+1, print_border,!,
   print_map(X2,Y).
-
 print_map(X,Y):-
   X=10,X2 is X+1, print_border,!,
   print_map(X2,Y).
@@ -24,40 +20,37 @@ print_map(X,Y):-
   print_map(X2,Y).
 
 
+/*print look*/
+
+
+
+
+
+/*print format*/
 print_format(X,Y):-
   player(X,Y,_,_,_,_,_),
   print_player.
-
 print_format(X,Y):-
   enemy(_,X,Y,_,_),
   print_enemy.
-
 print_format(X,Y):-
   location(X,Y,Item),
   weapon_id(_,Item),
   print_weapon.
-
-% print_medicine(X,Y):-
-%   location(X,Y,Item),
-%   type_item(medicine,Item),
-%   print_medicine.
-
 print_format(X,Y):-
   location(X,Y,Item),
-  food_id(_,Item),
+  type_item(medicine,Item),
+  print_medicine.
+print_format(X,Y):-
+  location(X,Y,Item),
+  type_item(food,Item),
   print_food.
-
 print_format(X,Y):-
   location(X,Y,Item),
-  drink_id(_,Item),
+  type_item(drink,Item),
   print_water.
+print_format(X,Y):-print_accessible.
 
-print_format(X,Y):-
-  print_accessible.
-
-
-
-map:- print_map(0,0).
 
 print_logo :- write('/////'),nl.
 

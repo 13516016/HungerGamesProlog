@@ -1,7 +1,6 @@
 :- dynamic(enemy/5).
 /* Enemy(EnemyID, EnemyX, EnemyY, EnemyHealth, EnemyAtk) */
 
-
 init_enemy(0) :- !.
 init_enemy(N) :- generate_enemy(N), M is N-1, init_enemy(M).
 
@@ -27,35 +26,35 @@ generate_enemy(EnemyID) :-
 % 	retract(enemy(EnemyID, CurrentX, CurrentY, Health, Atk)),
 % 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 
-random_move:-
-	random(1, 4, X),
-	X = 1, step_up, !,
-	X = 2, step_down, !,
-	X = 3, step_left, !,
-	X = 4, step_right, !.
+% random_move:-
+% 	random(1, 4, X),
+% 	X = 1, step_e_up, !,
+% 	X = 2, step_e_down, !,
+% 	X = 3, step_e_left, !,
+% 	X = 4, step_e_right, !.
 %
-% step_up:-
+% step_e_up:-
 % 	enemy(EnemyID, X, CurrentY, Health, Atk),
 % 	CurrentY > 0,
 % 	retract(enemy(EnemyID, X, CurrentY, Health, Atk)),
 % 	Y is CurrentY-1,
 % 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 %
-% step_down:-
+% step_e_down:-
 % 	enemy(EnemyID, X, CurrentY, Health, Atk),
 % 	CurrentY < 20,
 % 	retract(enemy(EnemyID, X, CurrentY, Health, Atk)),
 % 	Y is CurrentY+1,
 % 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 %
-% step_left:-
+% step_e_eft:-
 % 	enemy(EnemyID, X, CurrentY, Health, Atk),
 % 	CurrentX > 0,
 % 	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 % 	X is CurrentX-1,
 % 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 %
-% step_right:-
+% step_e_right:-
 % 	enemy(EnemyID, CurrentX, Y, Health, Atk),
 % 	CurrentX < 10,
 % 	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
