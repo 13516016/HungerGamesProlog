@@ -19,13 +19,6 @@ print_map(X,Y):-
   X2 is X+1, print_format(X,Y),!,
   print_map(X2,Y).
 
-
-/*print look*/
-
-
-
-
-
 /*print format*/
 print_format(X,Y):-
   player(X,Y,_,_,_,_,_),
@@ -33,6 +26,12 @@ print_format(X,Y):-
 print_format(X,Y):-
   enemy(_,X,Y,_,_),
   print_enemy.
+print_format(X,Y):-
+  location(X,Y,radar),
+  print_radar.
+% print_format(X,Y):-
+%   type_item(special,Item),
+%   print_radar.
 print_format(X,Y):-
   location(X,Y,Item),
   weapon_id(_,Item),
@@ -49,6 +48,18 @@ print_format(X,Y):-
   location(X,Y,Item),
   type_item(drink,Item),
   print_water.
+print_format(X,Y):-
+  X<0,
+  print_border.
+print_format(X,Y):-
+  X>9,
+  print_border.
+print_format(X,Y):-
+  Y<0,
+  print_border.
+print_format(X,Y):-
+  Y>19,
+  print_border.
 print_format(X,Y):-print_accessible.
 
 
@@ -112,6 +123,7 @@ print_food:- write('  F  ').
 print_water:- write('  W  ').
 print_weapon:- write('  #  ').
 print_player:- write('  P  ').
+print_radar:- write('  R  ').
 print_enemy:- write('  E  ').
 print_accessible:- write('  -  ').
 print_inaccessible:- write('  X  ').

@@ -140,25 +140,25 @@ step_up:-
   CurrentY > 0,
   retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   Y is CurrentY-1,
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 step_down:-
   player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList),
-  CurrentY < 20,
+  CurrentY < 19,
   retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   Y is CurrentY+1,
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 step_left:-
   player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList),
   CurrentX > 0,
   retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   X is CurrentX-1,
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 step_right:-
   player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList),
-  CurrentX < 10,
+  CurrentX < 9,
   retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   X is CurrentX+1,
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,NewItemList)).
+  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
