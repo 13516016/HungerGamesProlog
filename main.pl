@@ -44,7 +44,7 @@ is_turn(X) :-
 	decrease_hunger(2),
 	decrease_thirst(2),
 	generate_random_move(10),
-	enemy_atk.
+	enemy_attack.
 is_turn(X) :- !.
 
 /* check if the game is finished */
@@ -52,14 +52,14 @@ is_finished(Input) :-
 	Input = quit, !.
 is_finished(Input) :-
 	get_health(Health),
-	Health <= 0,
+	Health =< 0,
 	write('You\'re dead!'), nl, !.
 is_finished(Input) :-
 	get_hunger(Hunger),
-	Hunger <= 0,
+	Hunger =< 0,
 	write('You\'re dead!'), nl, !.
 is_finished(Input) :-
 	get_thirst(Thirst),
-	Thirst <= 0,
+	Thirst =< 0,
 	write('You\'re dead!'), nl, !.
 

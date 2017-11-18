@@ -7,7 +7,7 @@ attack :-
 	enemy(EnemyID, X, Y, Health, _),
 	atk_enemy(X, Y, Atk), !.
 attack :-
-	write('There\'s no enemy in your sight !'), nl.
+	write('There\'s no enemy in your sight !'), nl, fail.
 
 atk_enemy(X, Y, WeaponAtk) :-
 	enemy(EnemyID, X, Y, Health, Atk),
@@ -110,7 +110,7 @@ use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
 	del_item(Object),
-	format('You just used ~w', [Object]), nl,
+	format('You just used ~w', [Object]), nl, !.
 
 use(Object) :-
 	write('You don\'t have that item in your inventory !'), nl.
