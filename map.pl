@@ -12,5 +12,3 @@ grid(X, Y, Building) :- X >= 7, X =< 9, Y >= 17, Y =< 19, Building = perpustakaa
 grid(X, Y, Building) :- X is 3, Y is 19, Building = sacred_path, !.
 grid(X, Y, Building) :- X is 7, Y is 7, Building = secret_path, !.
 grid(X, Y, Building) :- Building = blank.
-
-/* This is for the interaction */

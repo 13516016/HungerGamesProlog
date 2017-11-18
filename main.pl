@@ -1,26 +1,42 @@
 /* Hentikan semua kegilaan ini */
 
+/* This is command to start the game */
+start :- g_read(started, X), X = 1, write('Game has already started'), nl, fail, !.
 start :-
 	g_read(started, X), X = 0, !,
-	welcome,
 	g_assign(started, 1),
+	set_seed(50), randomize,
+	repeat,
+	write('Do you want to load save file or want to start from scratch?? (Press 1 for yes or 0 for no)'), 
+	nl, write('> '),
+	read(X), check_load(X),
+	welcome,
 	main_loop.
 
-start :- g_read(started, X), X = 1, write('Game has already started'), nl.
-
+/* Main loop of the program */
 main_loop :-
 	repeat,
-	write('Say something > '),
-	read(X),
-	format('You said: ~w', [X]), nl,
-	call(X),
-	X = quit, !.
+	write('Do something > '),
+	read(Input),
+	format('You said: ~w', [Input]), nl,
+	call(Input), is_turn(Input),
+	Input = quit, !.
 
-welcome :-
-	write('Welcome to the ITB\'s Hunger Games!!'), nl,
-	write('You have been chosen as our students here... '), nl,
-	write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'),
-	print_start_help,
-	nl.
+/* Init everything when game started without load */
+init_everything :-
+	init_every_item,
+	init_player,
+  	init_enemy(10).
 
-quit :- g_assign(started, 0), write('Thanks for playing!'), nl.
+/* Check if user want to load from save file */
+check_load(0) :- init_everything, !.
+check_load(1) :- !.
+
+/* Check for command which not make a turn */
+is_turn(info) :- !.
+is_turn(save) :- !.
+is_turn(status) :- !.
+is_turn(look) :- !.
+is_turn(X) :- 
+	decrease_hunger(2),
+	decrease_thirst(2).

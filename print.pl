@@ -40,14 +40,29 @@ print_format(X,Y):-
 
 map:- print_map(0,0).
 
-
-
 print_logo :- write('/////'),nl.
 
-print_intro :-
-  write('Welcome to the BLABLABLABLA '),nl,
-  write('You have been chosen balbalabla'),nl.
+welcome :-
+  write('Welcome to the ITB\'s Hunger Games!!'), nl,
+  write('You have been chosen as our students here... '), nl,
+  write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
+  print_start_help,
+  nl.
 
+/* This is for the command list for the start */
+print_start_help :-
+  write('---------------------------AVAILABLE COMMANDS---------------------------'),nl,
+  nl,
+  write('-- start.                  | '),write('Start the game. '),nl,
+  print_command_list.
+
+/* This is for the command list when user input help */
+print_help :-
+  write('--------------------------------COMMAND LIST--------------------------------'),nl,
+  nl,
+  print_command_list.
+
+/* All the commands avaliable right now */
 print_command_list :-
   write('-- help.                   | '), write('Show available commands.'),nl,
   write('-- quit.                   | '), write('Quit the game.'),nl,
@@ -65,31 +80,7 @@ print_command_list :-
   write('-- save(Filename).         | '), write('Save the game with the given file name.'),nl,
   write('-- load(Filename).         | '), write('Load the game from the given file name.'),nl.
 
-print_help :-
-  write('--------------------------------COMMAND LIST--------------------------------'),nl,
-  nl,
-  print_command_list.
-
-clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
-
-
-print_medicine:-
-  write('  M  ').
-print_food:-
-  write('  F  ').
-print_water:-
-  write('  W  ').
-print_weapon:-
-  write('  #  ').
-print_player:-
-  write('  P  ').
-print_enemy:-
-  write('  E  ').
-print_accessible:-
-  write('  -  ').
-print_inaccessible:-
-  write('  X  ').
-
+/* this is to print legend in game */
 print_legend :-
   write('---------LEGENDS---------'),nl,
   nl,
@@ -102,12 +93,19 @@ print_legend :-
   print_accessible, write(' : Accessible'),nl,
   print_inaccessible, write(' : Inaccessible'),nl.
 
-print_start_help :-
-  write('---------------------------AVAILABLE COMMANDS---------------------------'),nl,
-  nl,
-  write('-- start.                  | '),write('Start the game. '),nl,
-  print_command_list.
+print_medicine:- write('  M  ').
+print_food:- write('  F  ').
+print_water:- write('  W  ').
+print_weapon:- write('  #  ').
+print_player:- write('  P  ').
+print_enemy:- write('  E  ').
+print_accessible:- write('  -  ').
+print_inaccessible:- write('  X  ').
 
+/* to clear screen of terminal */
+clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
+
+/* print status of the user */
 print_status :-
   get_health(Health),
   get_hunger(Hunger),

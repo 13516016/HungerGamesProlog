@@ -1,5 +1,6 @@
 :- dynamic(location/3).
-/* All weapon added */
+
+/* All items added as facts */
 
 /* Id of weapon */
 weapon_id(6, nothing).
@@ -18,7 +19,6 @@ weapon_atk(osjur, 70).
 weapon_atk(nothing, 0).
 
 /* Id of food */
-food_id(6, nothing).
 food_id(1, nasi_korea).
 food_id(2, nasi_jepang).
 food_id(3, danusan).
@@ -31,10 +31,8 @@ food_rate(nasi_jepang, 40).
 food_rate(danusan, 10).
 food_rate(geprek, 50).
 food_rate(uncle_bro, 20).
-food_rate(nothing, 0).
 
 /* Id of drink */
-drink_id(6, nothing).
 drink_id(1, aqua).
 drink_id(2, go_milk).
 drink_id(3, thai_tea).
@@ -47,17 +45,17 @@ drink_rate(go_milk, 30).
 drink_rate(thai_tea, 40).
 drink_rate(chocolate_changer, 25).
 drink_rate(coffee, 50).
-drink_rate(nothing, 0).
 
+/* This is the rules */
 /* Initialize map with everything */
 
-init_everything :-
-	init_all_weapon, init_all_drink, init_all_food, !.
+init_every_item :- 
+	init_all_weapon, init_all_drink, init_all_food, init_radar, !.
 
 /* Initialize map with weapons */
 
 init_all_weapon :-
-	init_weapon(30), init_weapon_forge(5).
+	init_weapon(10), init_weapon_forge(5).
 
 init_weapon(0) :- !.
 init_weapon(N) :-
@@ -71,7 +69,7 @@ init_weapon_forge(N) :-
 
 random_weapon :-
 	repeat,
-	random(1, 6, S), weapon_id(S, A),
+	random(1, 6, N), weapon_id(N, A), 
 	random(1, 11, X), random(1, 21, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
@@ -85,7 +83,7 @@ random_weapon_forge :-
 /* Initialize map with drink */
 
 init_all_drink :-
-	init_drink(10).
+	init_drink(30).
 
 init_drink(0) :- !.
 init_drink(N) :- random_drink, M is N -1, init_drink(M).
@@ -113,3 +111,14 @@ random_food :-
 	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
+
+/* Initialize map with one radar */
+init_radar :-
+	random_radar, !.
+
+random_radar :-
+	repeat,
+	random(1, 11, X), random(1, 21, Y),
+	grid(X, Y, Loc), 
+	Loc \== blank,
+	asserta(location(X, Y, radar)).
