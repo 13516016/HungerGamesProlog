@@ -1,4 +1,7 @@
-% attack :-
+attack :-
+	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+	weapon_atk(Weapon, Atk),
+
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!.
 
@@ -7,12 +10,18 @@ has_started:-
 
 help :- has_started,print_help.
 
-n :- has_started,step_up.
-s :- has_started,step_down.
-e :- has_started,step_right.
-w :- has_started,step_left.
+n :- has_started,step_up, !.
+n :- write('You can\'t move!'), nl.
+s :- has_started,step_down, !.
+s :- write('You can\'t move!'), nl.
+e :- has_started,step_right, !.
+e :- write('You can\'t move!'), nl.
+w :- has_started,step_left, !.
+w :- write('You can\'t move!'), nl.
 
-quit :- halt.
+quit :- 
+	write('Thank you for playing!'), nl, 
+	halt.
 
 % look :-
 
@@ -65,5 +74,3 @@ give_effect(medicine, Object) :-
 status :-
 	has_started,
 	print_status.
-
-

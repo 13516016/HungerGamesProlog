@@ -75,7 +75,7 @@ init_weapon_forge(N) :-
 random_weapon :-
 	repeat,
 	random(1, 6, N), weapon_id(N, A), 
-	random(1, 11, X), random(1, 21, Y),
+	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
@@ -95,7 +95,7 @@ init_drink(N) :- random_drink, M is N -1, init_drink(M).
 random_drink :-
 	repeat,
 	random(1, 6, N), drink_rate(N, A, _),
-	random(1, 11, X), random(1, 21, Y),
+	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
@@ -110,7 +110,7 @@ init_food(N) :- random_food, M is N -1, init_food(M).
 random_food :-
 	repeat,
 	random(1, 6, N), food_rate(N, A, _),
-	random(1, 11, X), random(1, 21, Y),
+	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
@@ -125,7 +125,7 @@ init_medicine(N) :- random_medicine, M is N -1, init_medicine(M).
 random_medicine :-
 	repeat,
 	random(1, 6, N), medicine_rate(N, A, _),
-	random(1, 11, X), random(1, 21, Y),
+	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
@@ -136,7 +136,7 @@ init_radar :-
 
 random_radar :-
 	repeat,
-	random(1, 11, X), random(1, 21, Y),
+	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc), 
 	Loc \== blank,
 	asserta(location(X, Y, radar)).

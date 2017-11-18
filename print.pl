@@ -1,4 +1,3 @@
-
 print_map(11,20):- !.
 print_map(11,Y):-
   Y2 is Y+1,nl,
@@ -37,25 +36,23 @@ print_format(X,Y):-
   weapon_id(_,Item),
   print_weapon.
 
-% print_medicine(X,Y):-
-%   location(X,Y,Item),
-%   type_item(medicine,Item),
-%   print_medicine.
+print_medicine(X,Y):-
+  location(X,Y,Item),
+  type_item(medicine,Item),
+  print_medicine.
 
 print_format(X,Y):-
   location(X,Y,Item),
-  food_id(_,Item),
+  type_item(food,Item),
   print_food.
 
 print_format(X,Y):-
   location(X,Y,Item),
-  drink_id(_,Item),
+  type_item(drink,Item),
   print_water.
 
 print_format(X,Y):-
   print_accessible.
-
-
 
 map:- print_map(0,0).
 
