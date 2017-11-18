@@ -19,6 +19,8 @@ print_map(X,Y):-
   X2 is X+1, write('-'),
   print_map(X2,Y).
 
+% print_format()
+
 map:- print_map(0,0).
 
 print_logo :- write('/////'),nl.
@@ -83,6 +85,10 @@ print_enemy:- write('  E  ').
 print_accessible:- write('  -  ').
 print_inaccessible:- write('  X  ').
 
+/* to clear screen of terminal */
+clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
+
+/* print status of the user */
 print_status :-
   get_health(Health),
   get_hunger(Hunger),

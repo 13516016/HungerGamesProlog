@@ -58,25 +58,25 @@ init_all_weapon :-
 	init_weapon(10), init_weapon_forge(5).
 
 init_weapon(0) :- !.
-init_weapon(N) :- 
-	random_weapon, 
-	M is N -1, 
+init_weapon(N) :-
+	random_weapon,
+	M is N -1,
 	init_weapon(M).
 
 init_weapon_forge(0) :- !.
-init_weapon_forge(N) :- 
+init_weapon_forge(N) :-
 	random_weapon_forge, M is N-1, init_weapon_forge(M).
 
 random_weapon :-
 	repeat,
 	random(1, 6, N), weapon_id(N, A), 
 	random(1, 11, X), random(1, 21, Y),
-	grid(X, Y, Loc), 
+	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
 
 random_weapon_forge :-
-	random(1, 6, N), weapon_id(N, A), 
+	random(1, 6, N), weapon_id(N, A),
 	random(7, 10, X), random(17, 20, Y),
 	asserta(location(X, Y, A)).
 
@@ -87,12 +87,12 @@ init_all_drink :-
 
 init_drink(0) :- !.
 init_drink(N) :- random_drink, M is N -1, init_drink(M).
-	
+
 random_drink :-
 	repeat,
-	random(1, 6, N), drink_id(N, A), 
+	random(1, 6, N), drink_id(N, A),
 	random(1, 11, X), random(1, 21, Y),
-	grid(X, Y, Loc), 
+	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
 
@@ -106,9 +106,9 @@ init_food(N) :- random_food, M is N -1, init_food(M).
 
 random_food :-
 	repeat,
-	random(1, 6, N), food_id(N, A), 
+	random(1, 6, N), food_id(N, A),
 	random(1, 11, X), random(1, 21, Y),
-	grid(X, Y, Loc), 
+	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, A)).
 
