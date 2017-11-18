@@ -12,7 +12,7 @@ s :- has_started,step_down.
 e :- has_started,step_right.
 w :- has_started,step_left.
 
- 
+
 quit :- halt.
 
 /*look*/
@@ -42,7 +42,8 @@ look :-
 
 
 
-map:- get_item_list(ItemList), print_map(-1,-1).
+map:- get_item_list(ItemList), member(radar,ItemList),print_map(-1,-1),!.
+map:- write('You have to use radar to see the map!'),nl.
 
 take(Object):-has_started,
 	take_item(Object),
