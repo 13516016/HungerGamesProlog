@@ -19,7 +19,24 @@ print_map(X,Y):-
   X2 is X+1, write('-'),
   print_map(X2,Y).
 
-% print_format()
+print_format(X,Y):-
+  location(X,Y,Item),
+  weapon_id(_,Item),
+  write('#'),!.
+
+print_format(X,Y):-
+  location(X,Y,Item),
+  food_id(_,Item),
+  write('F'),!.
+
+print_format(X,Y):-
+  location(X,Y,Item),
+  drink_id(_,Item),
+  write('W'),!.
+
+
+
+
 
 map:- print_map(0,0).
 
