@@ -12,7 +12,7 @@ s :- has_started,step_down.
 e :- has_started,step_right.
 w :- has_started,step_left.
 
-% quit :-
+quit :- halt.
 
 % look :-
 

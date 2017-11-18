@@ -1,25 +1,61 @@
 
-print_map(20,10):- !.
-print_map(20,Y):-
+print_map(11,20):- !.
+print_map(11,Y):-
   Y2 is Y+1,nl,
   print_map(0,Y2),!.
+
 print_map(X,Y):-
-  Y=0,X2 is X+1, write('#'),!,
-  print_map(X2,Y).
-print_map(X,Y):-
-  Y=10,X2 is X+1, write('#'),!,
-  print_map(X2,Y).
-print_map(X,Y):-
-  X=0,X2 is X+1, write('#'),!,
-  print_map(X2,Y).
-print_map(X,Y):-
-  X=19,X2 is X+1, write('#'),!,
-  print_map(X2,Y).
-print_map(X,Y):-
-  X2 is X+1, write('-'),
+  Y=0, X2 is X+1 ,print_border,!,
   print_map(X2,Y).
 
-% print_format()
+print_map(X,Y):-
+  Y=20,X2 is X+1, print_border,!,
+  print_map(X2,Y).
+
+print_map(X,Y):-
+  X=0,X2 is X+1, print_border,!,
+  print_map(X2,Y).
+
+print_map(X,Y):-
+  X=10,X2 is X+1, print_border,!,
+  print_map(X2,Y).
+print_map(X,Y):-
+  X2 is X+1, print_format(X,Y),!,
+  print_map(X2,Y).
+
+
+print_format(X,Y):-
+  player(X,Y,_,_,_,_,_),
+  print_player.
+
+print_format(X,Y):-
+  enemy(_,X,Y,_,_),
+  print_enemy.
+
+print_format(X,Y):-
+  location(X,Y,Item),
+  weapon_id(_,Item),
+  print_weapon.
+
+% print_medicine(X,Y):-
+%   location(X,Y,Item),
+%   type_item(medicine,Item),
+%   print_medicine.
+
+print_format(X,Y):-
+  location(X,Y,Item),
+  food_id(_,Item),
+  print_food.
+
+print_format(X,Y):-
+  location(X,Y,Item),
+  drink_id(_,Item),
+  print_water.
+
+print_format(X,Y):-
+  print_accessible.
+
+
 
 map:- print_map(0,0).
 
@@ -76,6 +112,8 @@ print_legend :-
   print_accessible, write(' : Accessible'),nl,
   print_inaccessible, write(' : Inaccessible'),nl.
 
+/*print map elements*/
+print_border:- write('~~~~~').
 print_medicine:- write('  M  ').
 print_food:- write('  F  ').
 print_water:- write('  W  ').
@@ -97,10 +135,10 @@ print_status :-
   get_position(X,Y),
   get_item_list(Items),
   write('Health     : '), write(Health), nl,
-  write('Hunger     : '), write(Health), nl,
+  write('Hunger     : '), write(Hunger), nl,
   write('Thirst     : '), write(Thirst), nl,
   write('Weapon     : '), write(Weapon), nl,
   write('Position   : '), format('(~d,~d) ',[X,Y]), nl,
   nl,
-  write('Items').
-  % print_items(Items).
+  write('Items'),nl,
+  write(Items).
