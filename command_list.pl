@@ -37,8 +37,33 @@ take_item(Object):-
 	location(X,Y,Object),
 	add_item(Object),!.
 
-% use(Object) :-
+use(Object) :-
+	player(_,_,_,_,_,_,ListItem),
+	member(Object, ListItem),
+	del_item(Object),
+	format('You just used ~w', [Object]), nl,
+	effect(Object).
+use(Object) :-
+	write('You don\'t have that item in your inventory !'), nl.
+
+effect(Object) :-
+	type_item(Type, Object),
+	give_effect(Type, Object).
+
+give_effect(drink, Object) :-
+	drink_rate(_, Object, Rate),
+	increase_thirst(Rate).
+
+give_effect(food, Object) :- 
+	food_rate(_, Object, Rate),
+	increase_hunger(Rate).
+	
+give_effect(medicine, Object) :- 
+	medicine_rate(_, Object, Rate),
+	increase_health(Rate).
 
 status :-
 	has_started,
 	print_status.
+
+

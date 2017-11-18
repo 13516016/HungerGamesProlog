@@ -25,8 +25,7 @@ main_loop :-
 /* Init everything when game started without load */
 init_everything :-
 	init_every_item,
-	init_player,
-  	init_enemy(10).
+	init_player.
 
 /* Check if user want to load from save file */
 check_load(0) :- init_everything, !.
