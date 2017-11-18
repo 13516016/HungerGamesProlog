@@ -53,7 +53,7 @@ step_e_up(EnemyID):-
 
 step_e_down(EnemyID):-
 	enemy(EnemyID, X, CurrentY, Health, Atk),
-	CurrentY < 20,
+	CurrentY < 19,
 	Y is CurrentY+1,
 	grid(X, Y, Loc), Loc \== blank,
 	retract(enemy(EnemyID, X, CurrentY, Health, Atk)),
@@ -69,7 +69,7 @@ step_e_left(EnemyID):-
 
 step_e_right(EnemyID):-
 	enemy(EnemyID, CurrentX, Y, Health, Atk),
-	CurrentX < 10,
+	CurrentX < 9,
 	X is CurrentX+1,
 	grid(X, Y, Loc), Loc \== blank,
 	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),

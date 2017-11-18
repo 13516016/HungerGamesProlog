@@ -1,6 +1,18 @@
+/* File untuk command */
+
 attack :-
 	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
 	weapon_atk(Weapon, Atk).
+	atk_enemy(X, Y, Atk).
+
+atk_enemy(X, Y, WeaponAtk) :-
+	enemy(EnemyID, X, Y, Health, Atk),
+	decrease_enemy_health(EnemyID, WeaponAtk).
+atk_enemy(X, Y, WeaponAtk) :-
+	write('You just attack your enemy(ies)!'), nl.
+
+enemy_atk :-
+	
 
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!.
@@ -78,29 +90,7 @@ use(Object) :-
 	member(Object, ListItem),
 	del_item(Object),
 	format('You just used ~w', [Object]), nl,
-	effect(Object),!.
-
-use(Object) :-
-	write('You don\'t have that item in your inventory !'), nl.
-
-effect(Object) :-
-	type_item(Type, Object),
-	give_effect(Type, Object).
-
-give_effect(drink, Object) :-
-	drink_rate(_, Object, Rate),
-	increase_thirst(Rate).
-
-give_effect(food, Object) :-
-	food_rate(_, Object, Rate),
-	increase_hunger(Rate).
-
-use(Object) :-
-	player(_,_,_,_,_,_,ListItem),
-	member(Object, ListItem),
-	del_item(Object),
-	format('You just used ~w', [Object]), nl,
-	effect(Object).
+	effect(Object), !.
 use(Object) :-
 	write('You don\'t have that item in your inventory !'), nl.
 
