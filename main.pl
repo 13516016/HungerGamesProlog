@@ -29,6 +29,7 @@ init_everything :-
 	init_player,
 	init_enemy(10).
 
+
 /* Check if user want to load from save file */
 check_load(0) :- init_everything, !.
 check_load(1) :- !.

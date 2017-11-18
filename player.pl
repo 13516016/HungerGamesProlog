@@ -4,13 +4,12 @@ default_health(100).
 default_hunger(20).
 default_thirst(50).
 default_weapon(nothing).
-default_weapon(nothing).
 default_item_list([]).
 
 random_location(X, Y) :-
   repeat,
   random(1, 11, A), random(1, 21, B),
-  grid(A, B, Loc), 
+  grid(A, B, Loc),
   Loc \== blank,
   X is A, Y is B.
 

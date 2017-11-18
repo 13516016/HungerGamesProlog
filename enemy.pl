@@ -54,20 +54,23 @@ step_e_up(EnemyID):-
 step_e_down(EnemyID):-
 	enemy(EnemyID, X, CurrentY, Health, Atk),
 	CurrentY < 20,
-	retract(enemy(EnemyID, X, CurrentY, Health, Atk)),
 	Y is CurrentY+1,
+	grid(X, Y, Loc), Loc \== blank,
+	retract(enemy(EnemyID, X, CurrentY, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 
 step_e_left(EnemyID):-
 	enemy(EnemyID, CurrentX, Y, Health, Atk),
 	CurrentX > 0,
-	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 	X is CurrentX-1,
+	grid(X, Y, Loc), Loc \== blank,
+	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 
 step_e_right(EnemyID):-
 	enemy(EnemyID, CurrentX, Y, Health, Atk),
 	CurrentX < 10,
-	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 	X is CurrentX+1,
+	grid(X, Y, Loc), Loc \== blank,
+	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
