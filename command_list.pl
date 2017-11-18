@@ -1,19 +1,28 @@
 /* File untuk command */
 
+/* When you attack */
 attack :-
 	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-	weapon_atk(Weapon, Atk).
-	atk_enemy(X, Y, Atk).
+	weapon_atk(Weapon, Atk),
+	enemy(EnemyID, X, Y, Health, _),
+	atk_enemy(X, Y, Atk), !.
+attack :-
+	write('There\'s no enemy in your sight !'), nl.
 
 atk_enemy(X, Y, WeaponAtk) :-
 	enemy(EnemyID, X, Y, Health, Atk),
-	decrease_enemy_health(EnemyID, WeaponAtk).
+	decrease_enemy_health(EnemyID, WeaponAtk), fail.
 atk_enemy(X, Y, WeaponAtk) :-
 	write('You just attack your enemy(ies)!'), nl.
 
+/* When enemy attack you */
 enemy_atk :-
-	
+	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+	enemy_atk(X,Y).
 
+enemy_atk(X,Y) :-
+	enemy(EnemyID, X, Y, Health, Atk),
+	decrease_health(Atk), nl, fail.
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!.
 
@@ -23,13 +32,13 @@ has_started:-
 help :- has_started,print_help.
 
 n :- has_started,step_up, !.
-n :- write('You can\'t move!'), nl.
+n :- write('You can\'t move!'), nl, fail.
 s :- has_started,step_down, !.
-s :- write('You can\'t move!'), nl.
+s :- write('You can\'t move!'), nl, fail.
 e :- has_started,step_right, !.
-e :- write('You can\'t move!'), nl.
+e :- write('You can\'t move!'), nl, fail.
 w :- has_started,step_left, !.
-w :- write('You can\'t move!'), nl.
+w :- write('You can\'t move!'), nl, fail.
 
 
 quit :- 
