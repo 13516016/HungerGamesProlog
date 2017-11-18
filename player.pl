@@ -44,10 +44,6 @@ decrease_health(Amount):-
 get_health(Health):-
   player(_,_,Health,_,_,_,_).
 
-set_health(Health):-
-  retract(player(X,Y,CurrentHealth,Hunger,Thirst,Weapon,ItemList)),
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
-
 % Hunger
 increase_hunger(Amount):-
   player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
@@ -69,10 +65,6 @@ decrease_hunger(Amount):-
 get_hunger(Hunger):-
   player(_,_,_,Hunger,_,_,_).
 
-set_hunger(Hunger):-
-  retract(player(X,Y,Health,CurrentHunger,Thirst,Weapon,ItemList)),
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
-
 % Thirst
 increase_thirst(Amount):-
   player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
@@ -93,10 +85,6 @@ decrease_thirst(Amount):-
 
 get_thirst(Thirst):-
   player(_,_,_,_,Thirst,_,_).
-
-set_thirst(Thirst):-
-  retract(player(X,Y,Health,Hunger,CurrentThirst,Weapon,ItemList)),
-  asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 % Weapon
 set_weapon(Weapon):-
@@ -138,27 +126,31 @@ set_position(X,Y):-
 step_up:-
   player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList),
   CurrentY > 0,
-  retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   Y is CurrentY-1,
+  grid(X, Y, Loc), Loc \== blank,
+  retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
-
+  
 step_down:-
   player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList),
   CurrentY < 19,
-  retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   Y is CurrentY+1,
+  grid(X, Y, Loc), Loc \== blank,
+  retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 step_left:-
   player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList),
   CurrentX > 0,
-  retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   X is CurrentX-1,
+  grid(X, Y, Loc), Loc \== blank,
+  retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
 
 step_right:-
   player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList),
   CurrentX < 9,
-  retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   X is CurrentX+1,
+  grid(X, Y, Loc), Loc \== blank,
+  retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
   asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).

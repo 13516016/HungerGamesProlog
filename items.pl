@@ -32,6 +32,7 @@ type_item(drink, coffee).
 type_item(medicine, uts_100).
 type_item(medicine, kuis_100).
 type_item(medicine, angbis).
+type_item(special, radar).
 
 /* Food hunger rate */
 food_rate(1, nasi_korea, 35).
