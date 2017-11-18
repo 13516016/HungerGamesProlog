@@ -19,7 +19,10 @@ print_map(X,Y):-
   X2 is X+1, write('-'),
   print_map(X2,Y).
 
+% print_format()
+
 map:- print_map(0,0).
+
 
 
 print_logo :- write('/////'),nl.
@@ -49,6 +52,9 @@ print_help :-
   write('--------------------------------COMMAND LIST--------------------------------'),nl,
   nl,
   print_command_list.
+
+clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
+
 
 print_medicine:-
   write('  M  ').

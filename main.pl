@@ -5,6 +5,7 @@ start :-
 	welcome,
 	g_assign(started, 1),
 	main_loop.
+
 start :- g_read(started, X), X = 1, write('Game has already started'), nl.
 
 main_loop :-
