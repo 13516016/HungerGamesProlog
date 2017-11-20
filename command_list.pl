@@ -2,52 +2,58 @@
 
 /* When you attack */
 attack :-
-	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-	weapon_atk(Weapon, Atk),
-	enemy(EnemyID, X, Y, Health, _),
-	atk_enemy(X, Y, Atk), !.
+	player(X,Y,_,_,_,Weapon,_),
+	weapon_atk(Weapon, WeaponAtk),
+	enemy(_, X, Y, _, Atk),
+	atk_enemy(X, Y, WeaponAtk, Atk), !.
 attack :-
 	write('There\'s no enemy in your sight !'), nl, fail.
 
-atk_enemy(X, Y, WeaponAtk) :-
-	enemy(EnemyID, X, Y, Health, Atk),
-	decrease_enemy_health(EnemyID, WeaponAtk), fail.
-atk_enemy(X, Y, WeaponAtk) :-
-	write('You just attack your enemy(ies)!'), nl.
+atk_enemy(X, Y, WeaponAtk, EnemyAtk) :-
+	enemy(EnemyID, X, Y, _, _),
+	write('You see an enemy in your sight... You try attack him... '), nl,
+	decrease_enemy_health(EnemyID, WeaponAtk), 
+	write('But you also got hit from your enemy... Urgh it\'s hurt!'), nl,
+	decrease_health(EnemyAtk), fail.
+atk_enemy(_, _, _, _) :- !.
 
 /* When enemy attack you */
 enemy_attack :-
-	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+	player(X,Y,_,_,_,_,_),
 	enemy_atk(X,Y).
 
 enemy_atk(X,Y) :-
-	enemy(EnemyID, X, Y, Health, Atk),
+	enemy(_, X, Y, _, Atk),
 	decrease_health(Atk), nl, fail.
 
-has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!.
+has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!, fail.
 has_started:- g_read(started,1),!.
 
 help :- has_started,print_help.
 
-
 /*MOVE*/
 n :- has_started,step_up, !.
-n :- write('You can\'t move!'), nl, fail.
+n :- fail_move, fail.
 s :- has_started,step_down, !.
-s :- write('You can\'t move!'), nl, fail.
+s :- fail_move, fail.
 e :- has_started,step_right, !.
-e :- write('You can\'t move!'), nl, fail.
+e :- fail_move, fail.
 w :- has_started,step_left, !.
-w :- write('You can\'t move!'), nl, fail.
+w :- fail_move, fail.
 
 /*QUIT*/
 quit :-
-	write('Thank you for playing!'), nl,
+	has_started,
+	write('Thank you for playing this game!'), nl,
 	halt.
 
 /*LOOK*/
 look :-
 	get_position(X,Y),!,
+	grid(X, Y, Loc),
+	print_loc(Loc),
+	print_items_loc(X, Y),
+	/* The calculation for the map */
 	NW_X is X-1, NW_Y is Y-1,
 	N_X is X, N_Y is Y-1,
 	NE_X is X+1, NE_Y is Y-1,
@@ -82,15 +88,21 @@ drop(Object) :-
 
 /*PRINT MAP (ONLY RADAR)*/
 map:- get_item_list(ItemList), member(radar,ItemList),print_map(-1,-1),!.
-map:- write('You have to use radar to see the map!'),nl.
+map:- write('You have to use radar to see the entire map!'),nl.
 
 
 /*TAKE OBJECT*/
 take(Object):-has_started,
+	Object = radar,
+	take_item(Object),
+	write('Dude you\'re so lucky! You have picked the radar, the most useful thing in this game (maybe)!'),
+	write(' I bet you\'s also very lucky in your tests!'), nl, !.
+take(Object):-has_started,
 	take_item(Object),
 	format('You have picked ~w !',[Object]),nl,!.
-take(Object):-has_started,
-	write('You can\'t take that item!'),nl,fail.
+take(_):-has_started,
+	write('Really dude? Why did you pick item which is not exist in this map or in this game? Seriously...'),nl,fail.
+
 take_item(Object):-
 	has_started,
 	weapon_id(_,Object),
@@ -111,9 +123,8 @@ use(Object) :-
 	member(Object, ListItem),
 	del_item(Object),
 	format('You just used ~w', [Object]), nl, !.
-
-use(Object) :-
-	write('You don\'t have that item in your inventory !'), nl.
+use(_) :-
+	write('Dude... You don\'t have that item in your inventory!'), nl.
 
 effect(Object) :-
 	type_item(Type, Object),

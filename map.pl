@@ -11,4 +11,4 @@ grid(X, Y, Building) :- X >= 3, X =< 5, Y >= 18, Y =< 19, Building = sadikin, !.
 grid(X, Y, Building) :- X >= 7, X =< 9, Y >= 17, Y =< 19, Building = perpustakaan, !.
 grid(X, Y, Building) :- X is 3, Y is 19, Building = sacred_path, !.
 grid(X, Y, Building) :- X is 7, Y is 7, Building = secret_path, !.
-grid(X, Y, Building) :- Building = blank.
+grid(_, _, Building) :- Building = blank.
