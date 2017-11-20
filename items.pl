@@ -56,7 +56,7 @@ medicine_rate(3, angbis, 30).
 /* This is the rules */
 /* Initialize map with everything */
 
-init_every_item :- 
+init_every_item :-
 	init_all_weapon, init_all_drink, init_all_food, init_all_medicine, init_radar, !.
 
 /* Initialize map with weapons */
@@ -75,7 +75,7 @@ init_weapon_forge(N) :-
 
 random_weapon :-
 	repeat,
-	random(1, 6, N), weapon_id(N, A), 
+	random(1, 6, N), weapon_id(N, A),
 	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
@@ -138,6 +138,6 @@ init_radar :-
 random_radar :-
 	repeat,
 	random(0, 10, X), random(0, 20, Y),
-	grid(X, Y, Loc), 
+	grid(X, Y, Loc),
 	Loc \== blank,
 	asserta(location(X, Y, radar)).

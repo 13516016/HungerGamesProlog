@@ -3,8 +3,8 @@
 default_health(100).
 default_hunger(20).
 default_thirst(50).
-default_weapon(nothing).
-default_item_list([]).
+default_weapon(webtoon).
+default_item_list([radar]).
 
 random_location(X, Y) :-
     repeat,
@@ -42,6 +42,7 @@ increase_health(Amount):-
 decrease_health(Amount):-
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     ResultHealth is Health-Amount,
+    format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl,
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 get_health(Health):-
@@ -139,7 +140,7 @@ step_up:-
     grid(X, Y, Loc), Loc \== blank,
     retract(player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
-    
+
 step_down:-
     player(X,CurrentY,Health,Hunger,Thirst,Weapon,ItemList),
     CurrentY < 19,
@@ -163,4 +164,3 @@ step_right:-
     grid(X, Y, Loc), Loc \== blank,
     retract(player(CurrentX,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)).
-

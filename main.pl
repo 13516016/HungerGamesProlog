@@ -20,8 +20,8 @@ main_loop :-
 	write('\nDo something > '),
 	read(Input),
 	is_input(Input),
-	call(Input),
 	is_turn(Input),
+	call(Input),
 	is_finished(Input), !.
 
 /* Init everything when game started without load */
@@ -43,14 +43,19 @@ is_input(_).
 is_turn(save) :- !.
 is_turn(status) :- !.
 is_turn(look) :- !.
+is_turn(map) :- !.
 is_turn(listing) :- !.
+is_turn(attack):-
+	check_enemy_same,!.
+is_turn(attack):-
+	generate_random_move(10),!.
 is_turn(_) :-
+	enemy_attack,
 	check_enemy_same,
-	enemy_attack, 
 	decrease_hunger(2),
 	decrease_thirst(2), !.
 is_turn(_) :-
-	generate_random_move(10),
+	generate_random_move(10),!.
 	decrease_hunger(2),
 	decrease_thirst(2), !.
 is_turn(_) :- !.
@@ -61,7 +66,7 @@ is_finished(Input) :-
 is_finished(_) :-
 	get_health(Health),
 	Health =< 0,
-	write('You\'re dead!'), nl, !.
+	write('You\' ran out health!'), nl, !.
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,

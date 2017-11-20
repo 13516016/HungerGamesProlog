@@ -188,7 +188,6 @@ print_item(Item) :-
 
 print_item_weapon(Item) :-
     format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
-
 print_type_item(food, Item) :-
     format('In the ground, you see the food.. You see the codename is ~w', [Item]), !.
 print_type_item(drink, Item) :-
