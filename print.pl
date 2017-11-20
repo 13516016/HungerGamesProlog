@@ -1,118 +1,118 @@
 /*print map*/
 print_map(11,20):- !.
 print_map(11,Y):-
-  Y2 is Y+1,nl,
-  print_map(-1,Y2),!.
+    Y2 is Y+1,nl,
+    print_map(-1,Y2),!.
 print_map(X,Y):-
-  Y= -1, X2 is X+1 ,print_border,!,
-  print_map(X2,Y).
+    Y= -1, X2 is X+1 ,print_border,!,
+    print_map(X2,Y).
 print_map(X,Y):-
-  Y=20,X2 is X+1, print_border,!,
-  print_map(X2,Y).
+    Y=20,X2 is X+1, print_border,!,
+    print_map(X2,Y).
 print_map(X,Y):-
-  X= -1,X2 is X+1, print_border,!,
-  print_map(X2,Y).
+    X= -1,X2 is X+1, print_border,!,
+    print_map(X2,Y).
 print_map(X,Y):-
-  X=10,X2 is X+1, print_border,!,
-  print_map(X2,Y).
+    X=10,X2 is X+1, print_border,!,
+    print_map(X2,Y).
 print_map(X,Y):-
-  X2 is X+1, print_format(X,Y),!,
-  print_map(X2,Y).
+    X2 is X+1, print_format(X,Y),!,
+    print_map(X2,Y).
 
 /*print format*/
 print_format(X,Y):-
-  player(X,Y,_,_,_,_,_),
-  print_player.
+    player(X,Y,_,_,_,_,_),
+    print_player.
 print_format(X,Y):-
-  enemy(_,X,Y,_,_),
-  print_enemy.
+    enemy(_,X,Y,_,_),
+    print_enemy.
 print_format(X,Y):-
   location(X,Y,Item),
   type_item(special,Item),
   print_radar.
 print_format(X,Y):-
-  location(X,Y,Item),
-  weapon_id(_,Item),
-  print_weapon.
+    location(X,Y,Item),
+    weapon_id(_,Item),
+    print_weapon.
 print_format(X,Y):-
-  location(X,Y,Item),
-  type_item(medicine,Item),
-  print_medicine.
+    location(X,Y,Item),
+    type_item(medicine,Item),
+    print_medicine.
 print_format(X,Y):-
-  location(X,Y,Item),
-  type_item(food,Item),
-  print_food.
+    location(X,Y,Item),
+    type_item(food,Item),
+    print_food.
 print_format(X,Y):-
-  location(X,Y,Item),
-  type_item(drink,Item),
-  print_water.
-print_format(X,Y):-
-  X<0,
-  print_border.
-print_format(X,Y):-
-  X>9,
-  print_border.
-print_format(X,Y):-
-  Y<0,
-  print_border.
-print_format(X,Y):-
-  Y>19,
-  print_border.
-print_format(X,Y):-print_accessible.
+    location(X,Y,Item),
+    type_item(drink,Item),
+    print_water.
+print_format(X,_):-
+    X < 0,
+    print_border.
+print_format(X,_):-
+    X > 9,
+    print_border.
+print_format(_,Y):-
+    Y < 0,
+    print_border.
+print_format(_,Y):-
+    Y > 19,
+    print_border.
+print_format(_,_):-print_accessible.
 
 
 print_logo :- write('/////'),nl.
 
-welcome :-
-  write('Welcome to the ITB\'s Hunger Games!!'), nl,
-  write('You have been chosen as our students here... '), nl,
-  write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
-  print_start_help,
-  nl.
+welcome_info :-
+    write('\nWelcome to the ITB\'s Hunger Games!!'), nl,
+    write('You have been chosen as our students here... '), nl,
+    write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
+    print_start_help,
+    print_legend,
+    nl.
 
 /* This is for the command list for the start */
 print_start_help :-
-  write('---------------------------AVAILABLE COMMANDS---------------------------'),nl,
-  nl,
-  write('-- start.                  | '),write('Start the game. '),nl,
-  print_command_list.
+    write('---------------------------AVAILABLE COMMANDS---------------------------'),nl,
+    nl,
+    write('-- start.                  | '),write('Start the game. '),nl,
+    print_command_list.
 
 /* This is for the command list when user input help */
 print_help :-
-  write('--------------------------------COMMAND LIST--------------------------------'),nl,
-  nl,
-  print_command_list.
+    write('--------------------------------COMMAND LIST--------------------------------'),nl,
+    nl,
+    print_command_list.
 
 /* All the commands avaliable right now */
 print_command_list :-
-  write('-- help.                   | '), write('Show available commands.'),nl,
-  write('-- quit.                   | '), write('Quit the game.'),nl,
-  write('-- look.                   | '), write('Look around you.'),nl,
-  write('-- n.                      | '), write('Move north.'),nl,
-  write('-- s.                      | '), write('Move south.'),nl,
-  write('-- e.                      | '), write('Move east.'),nl,
-  write('-- w.                      | '), write('Move west.'),nl,
-  write('-- map.                    | '), write('Look at the map (needs RADAR).'),nl,
-  write('-- take(Object).           | '), write('Pick up an object.'),nl,
-  write('-- drop(Object).           | '), write('Drop an object from the inventory.'),nl,
-  write('-- use(Object).            | '), write('Use an object from the inventory.'),nl,
-  write('-- attack.                 | '), write('Attack enemy.'),nl,
-  write('-- status.                 | '), write('Show your status.'),nl,
-  write('-- save(Filename).         | '), write('Save the game with the given file name.'),nl,
-  write('-- load(Filename).         | '), write('Load the game from the given file name.'),nl.
+    write('-- help.                   | '), write('Show available commands.'),nl,
+    write('-- quit.                   | '), write('Quit the game.'),nl,
+    write('-- look.                   | '), write('Look around you.'),nl,
+    write('-- n.                      | '), write('Move north.'),nl,
+    write('-- s.                      | '), write('Move south.'),nl,
+    write('-- e.                      | '), write('Move east.'),nl,
+    write('-- w.                      | '), write('Move west.'),nl,
+    write('-- map.                    | '), write('Look at the map (needs RADAR).'),nl,
+    write('-- take(Object).           | '), write('Pick up an object.'),nl,
+    write('-- drop(Object).           | '), write('Drop an object from the inventory.'),nl,
+    write('-- use(Object).            | '), write('Use an object from the inventory.'),nl,
+    write('-- attack.                 | '), write('Attack enemy.'),nl,
+    write('-- status.                 | '), write('Show your status.'),nl,
+    write('-- save(Filename).         | '), write('Save the game with the given file name.'),nl,
+    write('-- load(Filename).         | '), write('Load the game from the given file name.'),nl.
 
 /* this is to print legend in game */
 print_legend :-
-  write('---------LEGENDS---------'),nl,
-  nl,
-  print_medicine, write(' : Medicine'),nl,
-  print_food, write(' : Food'),nl,
-  print_water, write(' : Water'),nl,
-  print_weapon, write(' : Weapon'),nl,
-  print_player, write(' : Player'),nl,
-  print_enemy, write(' : Enemy'),nl,
-  print_accessible, write(' : Accessible'),nl,
-  print_inaccessible, write(' : Inaccessible'),nl.
+    nl, write('---------LEGENDS---------'),nl, nl,
+    print_medicine, write(' : Medicine'),nl,
+    print_food, write(' : Food'),nl,
+    print_water, write(' : Water'),nl,
+    print_weapon, write(' : Weapon'),nl,
+    print_player, write(' : Player'),nl,
+    print_enemy, write(' : Enemy'),nl,
+    print_accessible, write(' : Accessible'),nl,
+    print_inaccessible, write(' : Inaccessible').
 
 /*print map elements*/
 print_border:- write('~~~~~').
@@ -131,17 +131,71 @@ clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,
 
 /* print status of the user */
 print_status :-
-  get_health(Health),
-  get_hunger(Hunger),
-  get_thirst(Thirst),
-  get_weapon(Weapon),
-  get_position(X,Y),
-  get_item_list(Items),
-  write('Health     : '), write(Health), nl,
-  write('Hunger     : '), write(Hunger), nl,
-  write('Thirst     : '), write(Thirst), nl,
-  write('Weapon     : '), write(Weapon), nl,
-  write('Position   : '), format('(~d,~d) ',[X,Y]), nl,
-  nl,
-  write('Items'),nl,
-  write(Items).
+    get_health(Health),
+    get_hunger(Hunger),
+    get_thirst(Thirst),
+    get_weapon(Weapon),
+    get_position(X,Y),
+    get_item_list(Items),
+    write('Health     : '), write(Health), nl,
+    write('Hunger     : '), write(Hunger), nl,
+    write('Thirst     : '), write(Thirst), nl,
+    write('Weapon     : '), write(Weapon), nl,
+    write('Position   : '), format('(~d,~d) ',[X,Y]), nl,
+    nl,
+    write('Items'),nl,
+    write(Items).
+
+/* print location player right now */
+print_loc(kantin_borju):-
+    write('You are in Kantin Borju right now.. It is such a good place to eat but more expensive thant the others..'), nl, !.
+print_loc(kandom) :-
+    write('You are in Kandang Domba.. This place is very dangerous.. It is used to agitate AngMud :('), nl, !.
+print_loc(intel) :-
+    write('You are in Indonesia Tenggelam... It is very ferocious place.. You see flood everywhere...'), nl, !.
+print_loc(ruang_rektor) :-
+    write('You are in Ruang Rektor... Dude what have you done?'), nl, !.
+print_loc(labtek_v) :-
+    write('You are in Labtek V... This is your building for 3 years in ITB..'), nl, !.
+print_loc(ruang_ujian) :-
+    write('You are in Test Room right now.. Don\'t try to cheat~'), nl, !.
+print_loc(sadiking) :-
+    write('Tadaaa! You are in Sadikin! It is said to be the heaven for ITB student (who don\'t have money)~'), nl, !.
+print_loc(perpustakaan) :-
+    write('You are in library... Why are you so ambis?'), nl, !.
+print_loc(sacred_path) :-
+    write('You are in Sacred Path.. Do you know where this path is going to?'), nl, !.
+print_loc(secret_path) :-
+    write('Secret Path??? For what actually... (Really this is not the easter eggs!)'), nl, !.
+
+/* print items in your location right now */
+print_items_loc(X, Y) :-
+    location(X, Y, _),
+    print_item_loc(X, Y), !.
+print_items_loc(_, _) :-
+    write('In your place right now... You can\'t find any items.. Sad..'), nl.
+
+print_item_loc(X, Y) :-
+    location(X, Y, Item),
+    print_item(Item), nl,
+    fail.
+print_item_loc(_, _) :- !.
+
+print_item(Item) :-
+    type_item(Type, Item), print_type_item(Type, Item), !.
+print_item(Item) :-
+    print_item_weapon(Item).
+
+print_item_weapon(Item) :-
+    format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
+
+print_type_item(food, Item) :-
+    format('In the ground, you see the food.. You see the codename is ~w', [Item]), !.
+print_type_item(drink, Item) :-
+    format('In the ground, you see the drink.. You see the codename is ~w', [Item]), !.
+print_type_item(medicine, Item) :-
+    format('In the ground, you see the medicine. You see the codename is ~w', [Item]).
+
+/* print fail move */
+fail_move :-
+    write('You can\'t move!'), nl.

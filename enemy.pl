@@ -14,24 +14,29 @@ generate_enemy(EnemyID) :-
 
 % Health
 decrease_enemy_health(EnemyID, Amount):-
- 	retract(enemy(EnemyID, X, Y, Health, Atk)),
+	enemy(EnemyID, _, _, Health, _),
  	ResultHealth is Health-Amount,
  	ResultHealth > 0, 
-	asserta(enemy(EnemyID, X, Y, ResultHealth, Atk)).
+ 	write('But you failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl,
+ 	retract(enemy(EnemyID, _, _, Health, _)),
+	asserta(enemy(EnemyID, _, _, ResultHealth, _)), !.
+decrease_enemy_health(EnemyID, _):-
+	write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl,
+	retract(enemy(EnemyID, _, _, _, _)).
 
 % Position
 get_enemy_position(EnemyID, X, Y):-
 	enemy(EnemyID, X, Y, _, _).
 
 /* Generate all random move for enemy */
- 
 generate_random_move(0) :- !.
 generate_random_move(N) :- random_move(N), M is N-1, generate_random_move(M).
 
  /* Make random move for an enemy until enemy can move*/
 random_move(EnemyID) :-
 	random(1, 5, X),
-	select_step(EnemyID, X).
+	select_step(EnemyID, X), !.
+random_move(_) :- !.
 
 /* This his how the enemy move */
 select_step(EnemyID, 1) :-
@@ -74,3 +79,47 @@ step_e_right(EnemyID):-
 	grid(X, Y, Loc), Loc \== blank,
 	retract(enemy(EnemyID, CurrentX, Y, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
+
+/* Check if enemy is nearby */
+check_enemy_nearby :-
+	player(X,Y,_,_,_,_,_),
+	is_enemy_nearby(X,Y).
+
+is_enemy_nearby(X, Y) :-
+	A is X, B is Y,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X-1, B is Y-1,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X, B is Y-1,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X+1, B is Y-1,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X-1, B is Y,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X+1, B is Y,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X-1, B is Y+1,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X, B is Y+1,
+	enemy(_, A, B, _, _), !.
+is_enemy_nearby(X, Y) :-
+	A is X+1, B is Y+1,
+	enemy(_, A, B, _, _), !.
+
+/* check enemy same place */
+check_enemy_same :-
+	player(X,Y,_,_,_,_,_),
+	is_enemy_same(X, Y), !.
+check_enemy_same :-
+	write('Theres no enemy in your sight'), nl.
+	
+is_enemy_same(X, Y) :-
+	A is X, B is Y,
+	enemy(_, A, B, _, _), !.
