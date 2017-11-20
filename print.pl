@@ -27,11 +27,9 @@ print_format(X,Y):-
     enemy(_,X,Y,_,_),
     print_enemy.
 print_format(X,Y):-
-    location(X,Y,radar),
-    print_radar.
-% print_format(X,Y):-
-%   type_item(special,Item),
-%   print_radar.
+  location(X,Y,Item),
+  type_item(special,Item),
+  print_radar.
 print_format(X,Y):-
     location(X,Y,Item),
     weapon_id(_,Item),
@@ -174,7 +172,7 @@ print_loc(secret_path) :-
 print_items_loc(X, Y) :-
     location(X, Y, _),
     print_item_loc(X, Y), !.
-print_items_loc(_, _) :- 
+print_items_loc(_, _) :-
     write('In your place right now... You can\'t find any items.. Sad..'), nl.
 
 print_item_loc(X, Y) :-
@@ -190,7 +188,6 @@ print_item(Item) :-
 
 print_item_weapon(Item) :-
     format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
-
 print_type_item(food, Item) :-
     format('In the ground, you see the food.. You see the codename is ~w', [Item]), !.
 print_type_item(drink, Item) :-

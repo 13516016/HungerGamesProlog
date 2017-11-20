@@ -12,8 +12,7 @@ attack :-
 atk_enemy(X, Y, WeaponAtk, EnemyAtk) :-
 	enemy(EnemyID, X, Y, _, _),
 	write('You see an enemy in your sight... You try attack him... '), nl,
-	decrease_enemy_health(EnemyID, WeaponAtk), 
-	write('But you also got hit from your enemy... Urgh it\'s hurt!'), nl,
+	decrease_enemy_health(EnemyID, WeaponAtk),
 	decrease_health(EnemyAtk), fail.
 atk_enemy(_, _, _, _) :- !.
 
@@ -21,24 +20,23 @@ atk_enemy(_, _, _, _) :- !.
 enemy_attack :-
 	player(X,Y,_,_,_,_,_),
 	enemy_atk(X,Y).
-
 enemy_atk(X,Y) :-
 	enemy(_, X, Y, _, Atk),
 	decrease_health(Atk), nl, fail.
+enemy_atk(_,_):-!.
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!, fail.
 has_started:- g_read(started,1),!.
-
 help :- has_started,print_help.
 
 /*MOVE*/
-n :- has_started,step_up, !.
+n :- has_started,step_up,look, !.
 n :- fail_move, fail.
-s :- has_started,step_down, !.
+s :- has_started,step_down,look, !.
 s :- fail_move, fail.
-e :- has_started,step_right, !.
+e :- has_started,step_right,look, !.
 e :- fail_move, fail.
-w :- has_started,step_left, !.
+w :- has_started,step_left,look, !.
 w :- fail_move, fail.
 
 /*QUIT*/
@@ -85,31 +83,22 @@ drop(Object) :-
 drop(Object) :-
 	format('You don\'t have ~w!',[Object]),nl.
 
-
 /*PRINT MAP (ONLY RADAR)*/
 map:- get_item_list(ItemList), member(radar,ItemList),print_map(-1,-1),!.
 map:- write('You have to use radar to see the entire map!'),nl.
-
 
 /*TAKE OBJECT*/
 take(Object):-has_started,
 	Object = radar,
 	take_item(Object),
 	write('Dude you\'re so lucky! You have picked the radar, the most useful thing in this game (maybe)!'),
-	write(' I bet you\'s also very lucky in your tests!'), nl, !.
+	write(' I bet you\'re also very lucky in your tests!'), nl, !.
 take(Object):-has_started,
 	take_item(Object),
 	format('You have picked ~w !',[Object]),nl,!.
 take(_):-has_started,
 	write('Really dude? Why did you pick item which is not exist in this map or in this game? Seriously...'),nl,fail.
 
-take_item(Object):-
-	has_started,
-	weapon_id(_,Object),
-	player(X,Y,_,_,_,_,_),
-	location(X,Y,Object),
-	set_weapon(Object),
-	retract(location(X,Y,Object)),!.
 take_item(Object):-
 	has_started,
 	player(X,Y,_,_,_,_,_),
@@ -119,10 +108,22 @@ take_item(Object):-
 
 /*USE OBJECT*/
 use(Object) :-
+	player(_,_,_,_,_,Weapon,ListItem),
+	member(Object, ListItem),
+	weapon_id(_,Object),
+	del_item(Object),
+	set_weapon(Object),
+	add_item(Weapon),
+	format('You switched your weapon to ~w !', [Object]), nl, !.
+
+
+use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
 	del_item(Object),
+	effect(Object),
 	format('You just used ~w', [Object]), nl, !.
+
 use(_) :-
 	write('Dude... You don\'t have that item in your inventory!'), nl.
 
@@ -134,14 +135,23 @@ give_effect(drink, Object) :-
 	drink_rate(_, Object, Rate),
 	increase_thirst(Rate).
 
-give_effect(food, Object) :- 
+give_effect(food, Object) :-
 	food_rate(_, Object, Rate),
 	increase_hunger(Rate).
-	
-give_effect(medicine, Object) :- 
+
+give_effect(medicine, Object) :-
 	medicine_rate(_, Object, Rate),
 	increase_health(Rate).
 
+
+/*PRINT STATUS*/
 status :-
 	has_started,
 	print_status.
+
+
+/*SAVE STATE*/
+% save(Filename):-
+% 	open(Filename,write,Stream),
+% 	write(Stream,),
+% 	close(Stream).

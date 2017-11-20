@@ -14,15 +14,19 @@ generate_enemy(EnemyID) :-
 
 % Health
 decrease_enemy_health(EnemyID, Amount):-
-	enemy(EnemyID, _, _, Health, _),
+	enemy(EnemyID, X, Y, Health, Atk),
  	ResultHealth is Health-Amount,
- 	ResultHealth > 0, 
+	ResultHealth > 0,
  	write('But you failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl,
- 	retract(enemy(EnemyID, _, _, Health, _)),
-	asserta(enemy(EnemyID, _, _, ResultHealth, _)), !.
-decrease_enemy_health(EnemyID, _):-
+ 	retract(enemy(EnemyID, X, Y, Health, Atk)),
+	asserta(enemy(EnemyID, X, Y, ResultHealth, Atk)), !.
+
+decrease_enemy_health(EnemyID, Amount):-
+	enemy(EnemyID, X, Y, Health, Atk),
+	ResultHealth is Health-Amount,
+	ResultHealth =< 0,
 	write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl,
-	retract(enemy(EnemyID, _, _, _, _)).
+	retract(enemy(EnemyID, X, Y, Health, Atk)).
 
 % Position
 get_enemy_position(EnemyID, X, Y):-
@@ -34,7 +38,7 @@ generate_random_move(N) :- random_move(N), M is N-1, generate_random_move(M).
 
  /* Make random move for an enemy until enemy can move*/
 random_move(EnemyID) :-
-	random(1, 5, X),
+	random(1, 6, X),
 	select_step(EnemyID, X), !.
 random_move(_) :- !.
 
@@ -47,6 +51,7 @@ select_step(EnemyID, 3) :-
 	step_e_left(EnemyID), !.
 select_step(EnemyID, 4) :-
 	step_e_right(EnemyID), !.
+select_step(EnemyID, 5) :- !.
 
 step_e_up(EnemyID):-
 	enemy(EnemyID, X, CurrentY, Health, Atk),
@@ -119,7 +124,7 @@ check_enemy_same :-
 	is_enemy_same(X, Y), !.
 check_enemy_same :-
 	write('Theres no enemy in your sight'), nl.
-	
+
 is_enemy_same(X, Y) :-
-	A is X, B is Y,
-	enemy(_, A, B, _, _), !.
+	enemy(_, A, B, _, _),
+	A =:= X, B =:= Y, !.
