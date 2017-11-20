@@ -27,11 +27,9 @@ print_format(X,Y):-
   enemy(_,X,Y,_,_),
   print_enemy.
 print_format(X,Y):-
-  location(X,Y,radar),
+  location(X,Y,Item),
+  type_item(special,Item),
   print_radar.
-% print_format(X,Y):-
-%   type_item(special,Item),
-%   print_radar.
 print_format(X,Y):-
   location(X,Y,Item),
   weapon_id(_,Item),

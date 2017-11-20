@@ -7,26 +7,22 @@ attack :-
 	enemy(EnemyID, X, Y, Health, _),
 	atk_enemy(X, Y, Atk), !.
 attack :-
-	write('There\'s no enemy in your sight !'), nl.
-
+	write('There\'s no enemy in your sight !'), nl,fail.
 atk_enemy(X, Y, WeaponAtk) :-
 	enemy(EnemyID, X, Y, Health, Atk),
 	decrease_enemy_health(EnemyID, WeaponAtk), fail.
 atk_enemy(X, Y, WeaponAtk) :-
 	write('You just attack your enemy(ies)!'), nl.
-
 /* When enemy attack you */
 enemy_attack :-
 	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
 	enemy_atk(X,Y).
-
 enemy_atk(X,Y) :-
 	enemy(EnemyID, X, Y, Health, Atk),
 	decrease_health(Atk), nl, fail.
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!.
 has_started:- g_read(started,1),!.
-
 help :- has_started,print_help.
 
 
@@ -110,10 +106,9 @@ use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
 	del_item(Object),
-	format('You just used ~w', [Object]), nl,
+	format('You just used ~w', [Object]), nl,!.
 
-use(Object) :-
-	write('You don\'t have that item in your inventory !'), nl.
+use(Object) :- write('You don\'t have that item in your inventory !'), nl.
 
 effect(Object) :-
 	type_item(Type, Object),
@@ -123,14 +118,24 @@ give_effect(drink, Object) :-
 	drink_rate(_, Object, Rate),
 	increase_thirst(Rate).
 
-give_effect(food, Object) :- 
+give_effect(food, Object) :-
 	food_rate(_, Object, Rate),
 	increase_hunger(Rate).
-	
-give_effect(medicine, Object) :- 
+
+give_effect(medicine, Object) :-
 	medicine_rate(_, Object, Rate),
 	increase_health(Rate).
 
+
+/*PRINT STATUS*/
 status :-
 	has_started,
 	print_status.
+
+
+/*SAVE STATE*/
+save(Filename):-
+
+	open(Filename,write,Stream),
+	write(Stream,),
+	close(Stream).
