@@ -177,6 +177,10 @@ print_loc(secret_path) :-
 
 /* print items in your location right now */
 print_items_loc(X, Y) :-
+    check_enemy_same,
+    location(X, Y, _),
+    print_item_loc(X, Y), !.
+print_items_loc(X, Y) :-
     location(X, Y, _),
     print_item_loc(X, Y), !.
 print_items_loc(_, _) :-
@@ -216,7 +220,7 @@ print_player_nearby :-
     Xplus is X + 1, Yplus is Y + 1,
     Xmin is X - 1, Ymin is Y - 1,
     print_loc(Loc),
-    print_north(X,Yplus), print_south(X,Ymin),
+    print_north(X,Ymin), print_south(X,Yplus),
     print_east(Xplus,Y), print_west(Xmin,Y).
 
 print_north(X,Y) :-
@@ -273,20 +277,24 @@ fail_move :-
     write('You can\'t move!'), nl.
 
 /* print for player */
-print_increase_health :-
-    write('As you use it... You feel the power of the medicine.. You\'re now feel very strong!!!'), nl.
+print_increase_health(Object, Rate) :-
+    format('As you use ~w... ', [Object]), format('You feel the power of the medicine.. Your Health is increased by ~w!', [Rate]), nl,
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
+
+print_increase_hunger(Object, Rate) :-
+    format('As you eat ~w... ', [Object]), format('You don\'t feel hungry anymore.. Your Hunger is increased by ~w!', [Rate]), nl,
+    player(_,_,_,Hunger,_,_,_), format('Your Hunger now is ~w', [Hunger]), nl.
+
+print_increase_thirst(Object, Rate) :-
+    format('As you drink ~w... ', [Object]), format('You don\'t feel thirsty anymore.. Your Thirst is increased by ~w!', [Rate]), nl,
+    player(_,_,_,_,Thirst,_,_), format('Your Thirst now is ~w', [Thirst]), nl.
 
 print_decrease_health(Amount) :-
-    format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl.
+    format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl,
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
 
 print_inflict_damage(Amount):-
-  format('You deal ~w damage to the enemy!', [Amount]),nl.
-
-print_increase_hunger :-
-    write('As you eat it... You feel the power of the food.. It\'s so delicious!!'), nl.
-
-print_increase_thirst :-
-     write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl.
+    format('You deal ~w damage to the enemy!', [Amount]),nl.
 
 /* print for enemy */
 print_fail_kill :-

@@ -119,8 +119,7 @@ use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
 	del_item(Object),
-	effect(Object),
-	format('You just used ~w', [Object]), nl, !.
+	effect(Object), nl, !.
 
 use(_) :-
 	write('Dude... You don\'t have that item in your inventory!'), nl.
@@ -132,17 +131,17 @@ effect(Object) :-
 give_effect(drink, Object) :-
 	drink_rate(_, Object, Rate),
 	increase_thirst(Rate),
-	print_increase_thirst.
+	print_increase_thirst(Object, Rate).
 
 give_effect(food, Object) :-
 	food_rate(_, Object, Rate),
 	increase_hunger(Rate),
-	print_increase_hunger.
+	print_increase_hunger(Object, Rate).
 
 give_effect(medicine, Object) :-
 	medicine_rate(_, Object, Rate),
 	increase_health(Rate),
-	print_increase_health.
+	print_increase_health(Object, Rate).
 
 /*PRINT STATUS*/
 status :-

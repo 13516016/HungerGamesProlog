@@ -63,9 +63,13 @@ is_turn(listing) :- !.
 
 /* make a turn */
 is_turn(attack):-
-	check_enemy_same,!.
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(attack):-
-	generate_random_move(10),!.
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(n) :-
 	check_enemy_same,
 	decrease_hunger(2),
