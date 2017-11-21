@@ -38,6 +38,7 @@ check_load(1) :- !.
 % is_input(listing) :-
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
 is_input(look):-!.
+is_input(save):-!.
 is_input(attack):-!.
 is_input(map):-!.
 is_input(n):-!.

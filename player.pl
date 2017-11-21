@@ -2,7 +2,7 @@
 
 /* The default of the status after start */
 default_health(100).
-default_hunger(20).
+default_hunger(50).
 default_thirst(50).
 default_weapon(webtoon).
 default_item_list([radar]).
@@ -28,13 +28,12 @@ init_player:-
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    ResultHealth > 100, print_max_health,
+    ResultHealth > 150, 
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,100,Hunger,Thirst,Weapon,ItemList)).
+    asserta(player(X,Y,150,Hunger,Thirst,Weapon,ItemList)).
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    print_increase_health,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
@@ -51,12 +50,12 @@ get_health(Health):-
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHunger is Hunger+Amount,
-    ResultHunger > 50, print_max_hunger,
+    ResultHunger > 100,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,Health,50,Thirst,Weapon,ItemList)), !.
+    asserta(player(X,Y,Health,100,Thirst,Weapon,ItemList)), !.
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultHunger is Hunger+Amount, print_increase_hunger,
+    ResultHunger is Hunger+Amount, 
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,ResultHunger,Thirst,Weapon,ItemList)).
 
@@ -72,12 +71,12 @@ get_hunger(Hunger):-
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultThirst is Thirst+Amount,
-    ResultThirst > 50, print_max_thirst,
+    ResultThirst > 100, 
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,Health,Hunger,50,Weapon,ItemList)), !.
+    asserta(player(X,Y,Health,Hunger,100,Weapon,ItemList)), !.
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultThirst is Thirst+Amount, print_increase_thirst,
+    ResultThirst is Thirst+Amount, 
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,ResultThirst,Weapon,ItemList)).
 

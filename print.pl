@@ -273,10 +273,6 @@ fail_move :-
     write('You can\'t move!'), nl.
 
 /* print for player */
-print_max_health :-
-    write('You use it... But because your healt now pass the max amount of health, so we only set your health to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of health is 100!)'), nl.
-
 print_increase_health :-
     write('As you use it... You feel the power of the medicine.. You\'re now feel very strong!!!'), nl.
 
@@ -286,16 +282,8 @@ print_decrease_health(Amount) :-
 print_inflict_damage(Amount):-
   format('You deal ~w damage to the enemy!', [Amount]),nl.
 
-print_max_hunger :-
-    write('You eat it... But because your hunger now pass the max amount of hunger, so we only set your hunger to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of hunger is 50!)'), nl.
-
 print_increase_hunger :-
     write('As you eat it... You feel the power of the food.. It\'s so delicious!!'), nl.
-
-print_max_thirst :-
-    write('You drink it... But because your thirst now pass the max amount of thirst, so we only set your thirst to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of thirst is 50!)'), nl.
 
 print_increase_thirst :-
      write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl.
