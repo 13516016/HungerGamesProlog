@@ -65,14 +65,38 @@ is_turn(attack):-
 	check_enemy_same,!.
 is_turn(attack):-
 	generate_random_move(10),!.
-is_turn(n) :- check_enemy_same,!.
-is_turn(n) :- generate_random_move(10),!.
-is_turn(e) :- check_enemy_same,!.
-is_turn(e) :- generate_random_move(10),!.
-is_turn(w) :- check_enemy_same,!.
-is_turn(w) :- generate_random_move(10),!.
-is_turn(s) :- check_enemy_same,!.
-is_turn(s) :- generate_random_move(10),!.
+is_turn(n) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(n) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(e) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(e) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(w) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(w) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(s) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(s) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(_) :-
 	check_enemy_same,
 	enemy_attack,
@@ -90,12 +114,12 @@ is_finished(Input) :-
 is_finished(_) :-
 	get_health(Health),
 	Health =< 0,
-	write('You\' ran out health!'), nl, !.
+	write('You\' ran out health!'), nl, quit,!.
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,
-	write('You\'re dead!'), nl, !.
+	write('You\'re dead!'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
 	Thirst =< 0,
-	write('You\'re dead!'), nl, !.
+	write('You\'re dead!'), nl, quit,!.

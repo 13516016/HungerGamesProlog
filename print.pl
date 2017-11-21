@@ -143,7 +143,7 @@ print_status :-
     write('Health     : '), write(Health), nl,
     write('Hunger     : '), write(Hunger), nl,
     write('Thirst     : '), write(Thirst), nl,
-    write('Weapon     : '), write(Weapon), nl,
+    write('Weapon     : '), write(Weapon), weapon_atk(Weapon,AP), format(' | ~w AP',[AP]), nl,
     write('Position   : '), format('(~d,~d) ',[X,Y]), nl,
     nl,
     write('Items'),nl,
@@ -282,6 +282,9 @@ print_increase_health :-
 
 print_decrease_health(Amount) :-
     format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl.
+
+print_inflict_damage(Amount):-
+  format('You deal ~w damage to the enemy!', [Amount]),nl.
 
 print_max_hunger :-
     write('You eat it... But because your hunger now pass the max amount of hunger, so we only set your hunger to max amount~'), nl,
