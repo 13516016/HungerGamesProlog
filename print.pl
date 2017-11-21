@@ -58,8 +58,11 @@ print_format(_,Y):-
 print_format(_,Y):-
     Y > 19,
     print_border.
+print_format(X,Y):-
+  grid(X,Y,Z),
+  Z = blank,
+  print_inaccessible.
 print_format(_,_):-print_accessible.
-
 
 print_logo :- write('/////'),nl.
 
@@ -124,7 +127,7 @@ print_player:- write('  P  ').
 print_radar:- write('  R  ').
 print_enemy:- write('  E  ').
 print_accessible:- write('  -  ').
-print_inaccessible:- write('  X  ').
+print_inaccessible:- write('XXXXX').
 
 /* to clear screen of terminal */
 clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
@@ -186,12 +189,12 @@ print_item_loc(X, Y) :-
 print_item_loc(_, _) :- !.
 
 print_item(Item) :-
-    type_item(Type, Item), print_type_item(Type, Item).
+    type_item(Type, Item), print_type_item(Type, Item),!.
 print_item(Item) :-
     print_item_weapon(Item), !.
 
 print_item_weapon(Item) :-
-    format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
+    format('In the ground, you see the weapon.. You see the codename is ~w', [Item]),!.
 print_type_item(food, Item) :-
     format('In the ground, you see the food.. You see the codename is ~w', [Item]), !.
 print_type_item(drink, Item) :-
@@ -295,7 +298,7 @@ print_increase_thirst :-
      write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl.
 
 /* print for enemy */
-print_fail_kill :- 
+print_fail_kill :-
     write('You failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl.
 
 print_enemy_kill :-

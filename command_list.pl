@@ -115,7 +115,6 @@ use(Object) :-
 	add_item(Weapon),
 	format('You switched your weapon to ~w !', [Object]), nl, !.
 
-
 use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
