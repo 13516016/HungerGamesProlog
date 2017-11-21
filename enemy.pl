@@ -17,7 +17,7 @@ decrease_enemy_health(EnemyID, Amount):-
 	enemy(EnemyID, X, Y, Health, Atk),
  	ResultHealth is Health-Amount,
 	ResultHealth > 0,
- 	write('But you failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl,
+ 	print_fail_kill,
  	retract(enemy(EnemyID, X, Y, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, ResultHealth, Atk)), !.
 
@@ -25,7 +25,7 @@ decrease_enemy_health(EnemyID, Amount):-
 	enemy(EnemyID, X, Y, Health, Atk),
 	ResultHealth is Health-Amount,
 	ResultHealth =< 0,
-	write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl,
+	print_enemy_kill,
 	retract(enemy(EnemyID, X, Y, Health, Atk)).
 
 % Position
@@ -86,6 +86,7 @@ step_e_right(EnemyID):-
 	asserta(enemy(EnemyID, X, Y, Health, Atk)).
 
 /* Check if enemy is nearby */
+/* Enemy nearby : from -1 -> +1 (X,Y) for player */
 check_enemy_nearby :-
 	player(X,Y,_,_,_,_,_),
 	is_enemy_nearby(X,Y).
@@ -122,8 +123,8 @@ is_enemy_nearby(X, Y) :-
 check_enemy_same :-
 	player(X,Y,_,_,_,_,_),
 	is_enemy_same(X, Y), !.
-check_enemy_same :-
-	write('Theres no enemy in your sight'), nl.
+% check_enemy_same :-
+%	write('Theres no enemy in your sight'), nl, fail.
 
 is_enemy_same(X, Y) :-
 	enemy(_, A, B, _, _),

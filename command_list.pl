@@ -7,7 +7,7 @@ attack :-
 	enemy(_, X, Y, _, Atk),
 	atk_enemy(X, Y, WeaponAtk, Atk), !.
 attack :-
-	write('There\'s no enemy in your sight !'), nl, fail.
+	fail_attack, fail.
 
 atk_enemy(X, Y, WeaponAtk, EnemyAtk) :-
 	enemy(EnemyID, X, Y, _, _),
@@ -22,7 +22,7 @@ enemy_attack :-
 	enemy_atk(X,Y).
 enemy_atk(X,Y) :-
 	enemy(_, X, Y, _, Atk),
-	decrease_health(Atk), nl, fail.
+	decrease_health(Atk), fail.
 enemy_atk(_,_):-!.
 
 has_started:- g_read(started,0), write('Game hasn\'t started yet!'),nl,!, fail.
@@ -30,13 +30,13 @@ has_started:- g_read(started,1),!.
 help :- has_started,print_help.
 
 /*MOVE*/
-n :- has_started,step_up,look, !.
+n :- has_started, step_up, print_move_north, !.
 n :- fail_move, fail.
-s :- has_started,step_down,look, !.
+s :- has_started,step_down, print_move_south, !.
 s :- fail_move, fail.
-e :- has_started,step_right,look, !.
+e :- has_started,step_right, print_move_east, !.
 e :- fail_move, fail.
-w :- has_started,step_left,look, !.
+w :- has_started,step_left, print_move_west, !.
 w :- fail_move, fail.
 
 /*QUIT*/
@@ -48,8 +48,7 @@ quit :-
 /*LOOK*/
 look :-
 	get_position(X,Y),!,
-	grid(X, Y, Loc),
-	print_loc(Loc),
+	print_player_loc(X, Y),
 	print_items_loc(X, Y),
 	/* The calculation for the map */
 	NW_X is X-1, NW_Y is Y-1,

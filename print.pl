@@ -112,7 +112,7 @@ print_legend :-
     print_player, write(' : Player'),nl,
     print_enemy, write(' : Enemy'),nl,
     print_accessible, write(' : Accessible'),nl,
-    print_inaccessible, write(' : Inaccessible').
+    print_inaccessible, write(' : Inaccessible'), nl.
 
 /*print map elements*/
 print_border:- write('~~~~~').
@@ -147,6 +147,10 @@ print_status :-
     write(Items).
 
 /* print location player right now */
+print_player_loc(X, Y) :-
+    grid(X, Y, Loc),
+    print_loc(Loc).
+
 print_loc(kantin_borju):-
     write('You are in Kantin Borju right now.. It is such a good place to eat but more expensive thant the others..'), nl, !.
 print_loc(kandom) :-
@@ -159,7 +163,7 @@ print_loc(labtek_v) :-
     write('You are in Labtek V... This is your building for 3 years in ITB..'), nl, !.
 print_loc(ruang_ujian) :-
     write('You are in Test Room right now.. Don\'t try to cheat~'), nl, !.
-print_loc(sadiking) :-
+print_loc(sadikin) :-
     write('Tadaaa! You are in Sadikin! It is said to be the heaven for ITB student (who don\'t have money)~'), nl, !.
 print_loc(perpustakaan) :-
     write('You are in library... Why are you so ambis?'), nl, !.
@@ -182,9 +186,9 @@ print_item_loc(X, Y) :-
 print_item_loc(_, _) :- !.
 
 print_item(Item) :-
-    type_item(Type, Item), print_type_item(Type, Item), !.
+    type_item(Type, Item), print_type_item(Type, Item).
 print_item(Item) :-
-    print_item_weapon(Item).
+    print_item_weapon(Item), !.
 
 print_item_weapon(Item) :-
     format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
@@ -195,6 +199,104 @@ print_type_item(drink, Item) :-
 print_type_item(medicine, Item) :-
     format('In the ground, you see the medicine. You see the codename is ~w', [Item]).
 
+/* print nearby location*/
+print_player_nearby :-
+    check_enemy_nearby,
+    get_position(X,Y), grid(X,Y,Loc),
+    Xplus is X + 1, Yplus is Y + 1,
+    Xmin is X - 1, Ymin is Y - 1,
+    print_loc(Loc), write('You also sense that there\'s enemy nearby..'), nl,
+    print_north(X,Yplus), print_south(X,Ymin),
+    print_east(Xplus,Y), print_west(Xmin,Y), !.
+print_player_nearby :-
+    get_position(X,Y), grid(X,Y,Loc),
+    Xplus is X + 1, Yplus is Y + 1,
+    Xmin is X - 1, Ymin is Y - 1,
+    print_loc(Loc),
+    print_north(X,Yplus), print_south(X,Ymin),
+    print_east(Xplus,Y), print_west(Xmin,Y).
+
+print_north(X,Y) :-
+    grid(X,Y,Loc), print_nearby_loc(north, Loc).
+print_south(X,Y) :-
+    grid(X,Y,Loc), print_nearby_loc(south, Loc).
+print_east(X,Y) :-
+    grid(X,Y,Loc), print_nearby_loc(east, Loc).
+print_west(X,Y) :-
+    grid(X,Y,Loc), print_nearby_loc(west, Loc).
+
+print_nearby_loc(Direction, kantin_borju):-
+    format('In the ~w, you see Kantin Borju', [Direction]), nl, !.
+print_nearby_loc(Direction, kandom):-
+    format('In the ~w, you see Kandang Domba', [Direction]), nl, !.
+print_nearby_loc(Direction, intel):-
+    format('In the ~w, you see Indonesia Tenggelam', [Direction]), nl, !.
+print_nearby_loc(Direction, ruang_rektor):-
+    format('In the ~w, you see Ruang Rektor', [Direction]), nl, !.
+print_nearby_loc(Direction, labtek_v):-
+    format('In the ~w, you see Labtek V', [Direction]), nl, !.
+print_nearby_loc(Direction, ruang_ujian):-
+    format('In the ~w, you see Test Room', [Direction]), nl, !.
+print_nearby_loc(Direction, sadikin):-
+    format('In the ~w, you see Sadikin', [Direction]), nl, !.
+print_nearby_loc(Direction, perpustakaan):-
+    format('In the ~w, you see Library', [Direction]), nl, !.
+print_nearby_loc(Direction, sacred_path):-
+    format('In the ~w, you see something...', [Direction]), nl, !.
+print_nearby_loc(Direction, secret_path):-
+    format('In the ~w, you see... Wait.. What is that place?', [Direction]), nl, !.
+print_nearby_loc(Direction, blank):-
+    format('In the ~w, there\'s restricted place.. You can\'t go there!', [Direction]), nl, !.
+
+/* print movement */
+print_move_north :-
+    write('From your place, you move to the north...'), nl, print_player_nearby.
+
+print_move_south :-
+    write('From your place, you move to the south...'), nl, print_player_nearby.
+
+print_move_east :-
+    write('From your place, you move to the east...'), nl, print_player_nearby.
+
+print_move_west :-
+    write('From your place, you move to the west...'), nl, print_player_nearby.
+
+/* print fail attack */
+fail_attack :-
+    write('There\'s no enemy in your sight !'), nl.
+
 /* print fail move */
 fail_move :-
     write('You can\'t move!'), nl.
+
+/* print for player */
+print_max_health :-
+    write('You use it... But because your healt now pass the max amount of health, so we only set your health to max amount~'), nl,
+    write('(Well this game is balance and btw the max amount of health is 100!)'), nl.
+
+print_increase_health :-
+    write('As you use it... You feel the power of the medicine.. You\'re now feel very strong!!!'), nl.
+
+print_decrease_health(Amount) :-
+    format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl.
+
+print_max_hunger :-
+    write('You eat it... But because your hunger now pass the max amount of hunger, so we only set your hunger to max amount~'), nl,
+    write('(Well this game is balance and btw the max amount of hunger is 50!)'), nl.
+
+print_increase_hunger :-
+    write('As you eat it... You feel the power of the food.. It\'s so delicious!!'), nl.
+
+print_max_thirst :-
+    write('You drink it... But because your thirst now pass the max amount of thirst, so we only set your thirst to max amount~'), nl,
+    write('(Well this game is balance and btw the max amount of thirst is 50!)'), nl.
+
+print_increase_thirst :-
+     write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl.
+
+/* print for enemy */
+print_fail_kill :- 
+    write('You failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl.
+
+print_enemy_kill :-
+    write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl.

@@ -1,5 +1,6 @@
 :- dynamic(player/7).
 
+/* The default of the status after start */
 default_health(100).
 default_hunger(20).
 default_thirst(50).
@@ -27,22 +28,20 @@ init_player:-
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    ResultHealth > 100,
-    write('You use it... But because your healt now pass the max amount of health, so we only set your health to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of health is 100!)'), nl,
+    ResultHealth > 100, print_max_health,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,100,Hunger,Thirst,Weapon,ItemList)).
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    write('As you use it... You feel the power of the medicine.. You\'re now feel very strong!!!'), nl,
+    print_increase_health,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 decrease_health(Amount):-
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     ResultHealth is Health-Amount,
-    format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl,
+    print_decrease_health(Amount),
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 get_health(Health):-
@@ -52,15 +51,12 @@ get_health(Health):-
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHunger is Hunger+Amount,
-    ResultHunger > 50,
-    write('You eat it... But because your hunger now pass the max amount of hunger, so we only set your hunger to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of hunger is 50!)'), nl,
+    ResultHunger > 50, print_max_hunger,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,50,Thirst,Weapon,ItemList)), !.
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultHunger is Hunger+Amount,
-    write('As you eat it... You feel the power of the food.. It\'s so delicious!!'), nl,
+    ResultHunger is Hunger+Amount, print_increase_hunger,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,ResultHunger,Thirst,Weapon,ItemList)).
 
@@ -76,15 +72,12 @@ get_hunger(Hunger):-
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultThirst is Thirst+Amount,
-    ResultThirst > 50,
-    write('You drink it... But because your thirst now pass the max amount of thirst, so we only set your thirst to max amount~'), nl,
-    write('(Well this game is balance and btw the max amount of thirst is 50!)'), nl,
+    ResultThirst > 50, print_max_thirst,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,50,Weapon,ItemList)), !.
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultThirst is Thirst+Amount,
-    write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl,
+    ResultThirst is Thirst+Amount, print_increase_thirst,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,ResultThirst,Weapon,ItemList)).
 
@@ -122,6 +115,7 @@ delete_one(Term, [Term|Tail], Tail) :- !.
 delete_one(Term, [Head|Tail], [Head|Result]) :-
     delete_one(Term, Tail, Result).
 
+/* Get the list of item */
 get_item_list(ItemList):-
     player(_,_,_,_,_,_,ItemList).
 

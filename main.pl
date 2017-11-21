@@ -10,7 +10,7 @@ start :-
 	write('Do you want to load save file or want to start from scratch?? (Press 1 for yes or 0 for no)'),
 	nl, write('> '),
 	read(X), check_load(X),
-	welcome_info,
+	welcome_info, print_player_nearby,
 	main_loop.
 
 /* Main loop of the program */
@@ -20,8 +20,8 @@ main_loop :-
 	write('\nDo something > '),
 	read(Input),
 	is_input(Input),
-	is_turn(Input),
 	call(Input),
+	is_turn(Input),
 	is_finished(Input), !.
 
 /* Init everything when game started without load */
@@ -40,22 +40,34 @@ check_load(1) :- !.
 is_input(_).
 
 /* Check for command which not make a turn */
+
+/* for save status look map, the player dont make a turn */
 is_turn(save) :- !.
 is_turn(status) :- !.
 is_turn(look) :- !.
 is_turn(map) :- !.
 is_turn(listing) :- !.
+
+/* make a turn */
 is_turn(attack):-
 	check_enemy_same,!.
 is_turn(attack):-
 	generate_random_move(10),!.
+is_turn(n) :- check_enemy_same,!.
+is_turn(n) :- generate_random_move(10),!.
+is_turn(e) :- check_enemy_same,!.
+is_turn(e) :- generate_random_move(10),!.
+is_turn(w) :- check_enemy_same,!.
+is_turn(w) :- generate_random_move(10),!.
+is_turn(s) :- check_enemy_same,!.
+is_turn(s) :- generate_random_move(10),!.
 is_turn(_) :-
-	enemy_attack,
 	check_enemy_same,
+	enemy_attack,
 	decrease_hunger(2),
 	decrease_thirst(2), !.
 is_turn(_) :-
-	generate_random_move(10),!.
+	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2), !.
 is_turn(_) :- !.
