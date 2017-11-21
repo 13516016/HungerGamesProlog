@@ -16,12 +16,12 @@ start :-
 /* Main loop of the program */
 main_loop :-
 	repeat,
-	set_seed(50), randomize,
-	write('\nDo something > '),
-	read(Input),
-	is_input(Input),
-	call(Input),
-	is_turn(Input),
+		set_seed(50), randomize,
+		write('\nDo something > '),
+		read(Input),
+		is_input(Input),
+		call(Input),
+		is_turn(Input),
 	is_finished(Input), !.
 
 /* Init everything when game started without load */
@@ -37,7 +37,19 @@ check_load(1) :- !.
 /* Check if input is valid */
 % is_input(listing) :-
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
-is_input(_).
+is_input(look):-!.
+is_input(attack):-!.
+is_input(map):-!.
+is_input(n):-!.
+is_input(e):-!.
+is_input(s):-!.
+is_input(w):-!.
+is_input(quit):-!.
+is_input(status):-!.
+is_input(take(_)):-!.
+is_input(use(_)):-!.
+
+is_input(_):- write('Wrong input. Please try again.'),nl,fail,!.
 
 /* Check for command which not make a turn */
 
@@ -53,14 +65,38 @@ is_turn(attack):-
 	check_enemy_same,!.
 is_turn(attack):-
 	generate_random_move(10),!.
-is_turn(n) :- check_enemy_same,!.
-is_turn(n) :- generate_random_move(10),!.
-is_turn(e) :- check_enemy_same,!.
-is_turn(e) :- generate_random_move(10),!.
-is_turn(w) :- check_enemy_same,!.
-is_turn(w) :- generate_random_move(10),!.
-is_turn(s) :- check_enemy_same,!.
-is_turn(s) :- generate_random_move(10),!.
+is_turn(n) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(n) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(e) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(e) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(w) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(w) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(s) :-
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
+is_turn(s) :-
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(_) :-
 	check_enemy_same,
 	enemy_attack,
@@ -78,12 +114,12 @@ is_finished(Input) :-
 is_finished(_) :-
 	get_health(Health),
 	Health =< 0,
-	write('You\' ran out health!'), nl, !.
+	write('You\' ran out health!'), nl, quit,!.
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,
-	write('You\'re dead!'), nl, !.
+	write('You\'re dead!'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
 	Thirst =< 0,
-	write('You\'re dead!'), nl, !.
+	write('You\'re dead!'), nl, quit,!.

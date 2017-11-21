@@ -58,8 +58,11 @@ print_format(_,Y):-
 print_format(_,Y):-
     Y > 19,
     print_border.
+print_format(X,Y):-
+  grid(X,Y,Z),
+  Z = blank,
+  print_inaccessible.
 print_format(_,_):-print_accessible.
-
 
 print_logo :- write('/////'),nl.
 
@@ -124,7 +127,7 @@ print_player:- write('  P  ').
 print_radar:- write('  R  ').
 print_enemy:- write('  E  ').
 print_accessible:- write('  -  ').
-print_inaccessible:- write('  X  ').
+print_inaccessible:- write('XXXXX').
 
 /* to clear screen of terminal */
 clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
@@ -140,7 +143,7 @@ print_status :-
     write('Health     : '), write(Health), nl,
     write('Hunger     : '), write(Hunger), nl,
     write('Thirst     : '), write(Thirst), nl,
-    write('Weapon     : '), write(Weapon), nl,
+    write('Weapon     : '), write(Weapon), weapon_atk(Weapon,AP), format(' | ~w AP',[AP]), nl,
     write('Position   : '), format('(~d,~d) ',[X,Y]), nl,
     nl,
     write('Items'),nl,
@@ -186,12 +189,12 @@ print_item_loc(X, Y) :-
 print_item_loc(_, _) :- !.
 
 print_item(Item) :-
-    type_item(Type, Item), print_type_item(Type, Item).
+    type_item(Type, Item), print_type_item(Type, Item),!.
 print_item(Item) :-
     print_item_weapon(Item), !.
 
 print_item_weapon(Item) :-
-    format('In the ground, you see the weapon.. You see the codename is ~w', [Item]).
+    format('In the ground, you see the weapon.. You see the codename is ~w', [Item]),!.
 print_type_item(food, Item) :-
     format('In the ground, you see the food.. You see the codename is ~w', [Item]), !.
 print_type_item(drink, Item) :-
@@ -280,6 +283,9 @@ print_increase_health :-
 print_decrease_health(Amount) :-
     format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl.
 
+print_inflict_damage(Amount):-
+  format('You deal ~w damage to the enemy!', [Amount]),nl.
+
 print_max_hunger :-
     write('You eat it... But because your hunger now pass the max amount of hunger, so we only set your hunger to max amount~'), nl,
     write('(Well this game is balance and btw the max amount of hunger is 50!)'), nl.
@@ -295,7 +301,7 @@ print_increase_thirst :-
      write('As you drink it... You feel the power of the drink.. You do\'nt feel thristy anymore.. Good for you!'), nl.
 
 /* print for enemy */
-print_fail_kill :- 
+print_fail_kill :-
     write('You failed to make him dropout from ITB.. Now he\'s trying to attack you too!'), nl.
 
 print_enemy_kill :-
