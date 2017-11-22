@@ -251,6 +251,20 @@ print_nearby_loc(Direction, secret_path):-
 print_nearby_loc(Direction, blank):-
     format('In the ~w, there\'s restricted place.. You can\'t go there!', [Direction]), nl, !.
 
+/*Location effect*/
+print_sadikin_effect:-
+  write('\nYou are in the most favorable place for ITB Students! Sadikin! You replenished your health.'),nl,!.
+
+print_ruang_ujian_effect:-
+  write('\nThe pressure in Ruang Ujian is so tense.... You can\'t bear it. Your health is decreased by 2.'),nl,!.
+
+print_kandom_effect:-
+  write('\nYou are being agitated by seniors on Kandom! Your health is decreased by 5.'),nl,!.
+
+print_kantin_borju_effect:-
+  write('Yummy! Kantin Borju increased your hunger and thirst by 2 points!'),nl,!.
+
+
 /* print movement */
 print_move_north :-
     write('From your place, you move to the north...'), nl, print_player_nearby.

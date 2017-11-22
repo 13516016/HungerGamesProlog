@@ -131,15 +131,42 @@ effect(Object) :-
 
 give_effect(drink, Object) :-
 	drink_rate(_, Object, Rate),
-	increase_thirst(Rate).
+	increase_thirst(Rate),
+	get_thirst(Thirst),
+	default_thirst(MaxThirst),
+	Thirst =:= MaxThirst,
+	print_max_thirst.
+
+give_effect(drink, Object) :-
+	drink_rate(_, Object, Rate),
+	increase_thirst(Rate),
+	print_increase_thirst.
 
 give_effect(food, Object) :-
 	food_rate(_, Object, Rate),
-	increase_hunger(Rate).
+	increase_hunger(Rate),
+	get_hunger(Hunger),
+	default_hunger(MaxHunger),
+	Hunger =:= MaxHunger,
+	print_max_hunger.
+
+give_effect(food, Object) :-
+	food_rate(_, Object, Rate),
+	increase_hunger(Rate),
+	print_increase_hunger.
 
 give_effect(medicine, Object) :-
 	medicine_rate(_, Object, Rate),
-	increase_health(Rate).
+	increase_health(Rate),
+	get_health(Health),
+	default_health(MaxHealth),
+	Health =:= MaxHealth,
+	print_max_health.
+
+give_effect(medicine, Object) :-
+	medicine_rate(_, Object, Rate),
+	increase_health(Rate),
+	print_increase_health.
 
 
 /*PRINT STATUS*/

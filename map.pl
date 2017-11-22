@@ -12,3 +12,31 @@ grid(X, Y, Building) :- X >= 7, X =< 9, Y >= 17, Y =< 19, Building = perpustakaa
 grid(X, Y, Building) :- X is 3, Y is 19, Building = sacred_path, !.
 grid(X, Y, Building) :- X is 7, Y is 7, Building = secret_path, !.
 grid(X, Y, Building) :- Building = blank.
+
+/*Location effect*/
+effect_location:-
+  get_position(X,Y),
+  grid(X,Y,sadikin),
+  increase_health(100),
+  print_sadikin_effect.
+
+effect_location:-
+  get_position(X,Y),
+  grid(X,Y,ruang_ujian),
+  decrease_health(2),
+  print_ruang_ujian_effect.
+
+effect_location:-
+  get_position(X,Y),
+  grid(X,Y,kandom),
+  decrease_health(5),
+  print_kandom_effect.
+
+effect_location:-
+  get_position(X,Y),
+  grid(X,Y,kantin_borju),
+  increase_hunger(2),
+  increase_thirst(2),
+  print_kantin_borju_effect.
+
+effect_location:-!.
