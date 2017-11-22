@@ -212,16 +212,13 @@ print_player_nearby :-
     get_position(X,Y), grid(X,Y,Loc),
     Xplus is X + 1, Yplus is Y + 1,
     Xmin is X - 1, Ymin is Y - 1,
-    print_loc(Loc), write('You also sense that there\'s enemy nearby..'), nl,
-    print_north(X,Yplus), print_south(X,Ymin),
-    print_east(Xplus,Y), print_west(Xmin,Y), !.
+    print_loc(Loc), write('You also sense that there\'s enemy nearby..'), nl, !.
+
 print_player_nearby :-
     get_position(X,Y), grid(X,Y,Loc),
     Xplus is X + 1, Yplus is Y + 1,
     Xmin is X - 1, Ymin is Y - 1,
-    print_loc(Loc),
-    print_north(X,Ymin), print_south(X,Yplus),
-    print_east(Xplus,Y), print_west(Xmin,Y).
+    print_loc(Loc).
 
 print_north(X,Y) :-
     grid(X,Y,Loc), print_nearby_loc(north, Loc).
@@ -255,18 +252,31 @@ print_nearby_loc(Direction, secret_path):-
 print_nearby_loc(Direction, blank):-
     format('In the ~w, there\'s restricted place.. You can\'t go there!', [Direction]), nl, !.
 
+/*Location effect*/
+print_sadikin_effect:-
+  write('You are in the most favorable place for ITB Students! Sadikin! You replenished your health.'),nl,!.
+
+print_ruang_ujian_effect:-
+  write('The pressure in Ruang Ujian is so tense.... You can\'t bear it. Your health is decreased by 2.'),nl,!.
+
+print_kandom_effect:-
+  write('You are being agitated by seniors on Kandom! Your health is decreased by 5.'),nl,!.
+
+print_kantin_borju_effect:-
+  write('Yummy! Kantin Borju increased your hunger and thirst by 2 points!'),nl,!.
+
+
 /* print movement */
 print_move_north :-
-    write('From your place, you move to the north...'), nl, print_player_nearby.
-
+    write('From your place, you move to the north...'), nl.
 print_move_south :-
-    write('From your place, you move to the south...'), nl, print_player_nearby.
+    write('From your place, you move to the south...'), nl.
 
 print_move_east :-
-    write('From your place, you move to the east...'), nl, print_player_nearby.
+    write('From your place, you move to the east...'), nl.
 
 print_move_west :-
-    write('From your place, you move to the west...'), nl, print_player_nearby.
+    write('From your place, you move to the west...'), nl.
 
 /* print fail attack */
 fail_attack :-

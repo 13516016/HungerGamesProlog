@@ -39,6 +39,7 @@ check_load(1) :- !.
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
 is_input(look):-!.
 is_input(save):-!.
+is_input(help):-!.
 is_input(attack):-!.
 is_input(map):-!.
 is_input(n):-!.
@@ -58,6 +59,7 @@ is_input(_):- write('Wrong input. Please try again.'),nl,fail,!.
 is_turn(save) :- !.
 is_turn(status) :- !.
 is_turn(look) :- !.
+is_turn(help) :- !.
 is_turn(map) :- !.
 is_turn(listing) :- !.
 
@@ -65,53 +67,65 @@ is_turn(listing) :- !.
 is_turn(attack):-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(attack):-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(n) :-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(n) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(e) :-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(e) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(w) :-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(w) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(s) :-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(s) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(_) :-
 	check_enemy_same,
 	enemy_attack,
 	decrease_hunger(2),
-	decrease_thirst(2), !.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(_) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2), !.
-is_turn(_) :- !.
+	decrease_thirst(2),
+	effect_location,!.
+is_turn(_) :- effect_location,!.
 
 /* check if the game is finished */
 is_finished(Input) :-
@@ -123,8 +137,9 @@ is_finished(_) :-
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,
-	write('You\'re dead!'), nl, quit,!.
+	write('You\'r desperately in need for food! You are dead.'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
+
 	Thirst =< 0,
-	write('You\'re dead!'), nl, quit,!.
+	write('You\'thirst to dead.'), nl, quit,!.

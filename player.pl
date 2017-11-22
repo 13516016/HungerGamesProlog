@@ -28,7 +28,7 @@ init_player:-
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    ResultHealth > 150, 
+    ResultHealth > 150,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,150,Hunger,Thirst,Weapon,ItemList)).
 increase_health(Amount):-
@@ -40,7 +40,6 @@ increase_health(Amount):-
 decrease_health(Amount):-
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     ResultHealth is Health-Amount,
-    print_decrease_health(Amount),
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 get_health(Health):-
@@ -55,7 +54,7 @@ increase_hunger(Amount):-
     asserta(player(X,Y,Health,100,Thirst,Weapon,ItemList)), !.
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultHunger is Hunger+Amount, 
+    ResultHunger is Hunger+Amount,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,ResultHunger,Thirst,Weapon,ItemList)).
 
@@ -71,12 +70,12 @@ get_hunger(Hunger):-
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultThirst is Thirst+Amount,
-    ResultThirst > 100, 
+    ResultThirst > 100,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,100,Weapon,ItemList)), !.
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-    ResultThirst is Thirst+Amount, 
+    ResultThirst is Thirst+Amount,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     asserta(player(X,Y,Health,Hunger,ResultThirst,Weapon,ItemList)).
 

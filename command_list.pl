@@ -12,8 +12,9 @@ attack :-
 atk_enemy(X, Y, WeaponAtk, EnemyAtk) :-
 	enemy(EnemyID, X, Y, _, _),
 	write('You see an enemy in your sight... You try attack him... '), nl,
-	decrease_enemy_health(EnemyID, WeaponAtk),
-	decrease_health(EnemyAtk), fail.
+	decrease_health(EnemyAtk),
+	print_decrease_health(EnemyAtk),
+	decrease_enemy_health(EnemyID, WeaponAtk),fail.
 atk_enemy(_, _, _, _) :- !.
 
 /* When enemy attack you */
@@ -59,7 +60,9 @@ look :-
 	E_X is X+1, E_Y is Y,
 	SW_X is X-1, SW_Y is Y+1,
 	S_X is X, S_Y is Y+1,
-	SE_X is X+1, SE_Y is Y+1,
+	SE_X is X+1, SE_Y is Y+1,nl,
+	print_north(N_X,N_Y), print_south(S_X,S_Y),
+	print_east(E_X,E_Y), print_west(W_X,W_Y),
 	print_format(NW_X,NW_Y),!,
 	print_format(N_X,N_Y),!,
 	print_format(NE_X,NE_Y),!,nl,
@@ -131,17 +134,18 @@ effect(Object) :-
 give_effect(drink, Object) :-
 	drink_rate(_, Object, Rate),
 	increase_thirst(Rate),
-	print_increase_thirst(Object, Rate).
+	print_increase_thirst(Object,Rate).
 
 give_effect(food, Object) :-
 	food_rate(_, Object, Rate),
 	increase_hunger(Rate),
-	print_increase_hunger(Object, Rate).
+	print_increase_hunger(Object,Rate).
 
 give_effect(medicine, Object) :-
 	medicine_rate(_, Object, Rate),
 	increase_health(Rate),
-	print_increase_health(Object, Rate).
+	print_increase_health(Object,Rate).
+
 
 /*PRINT STATUS*/
 status :-
@@ -150,7 +154,7 @@ status :-
 
 /*SAVE STATE*/
 save:-
-	write('Write the name of your file?'), nl, 
+	write('Write the name of your file?'), nl,
 	write('> '), read(File),
 	atom_concat(File, '.txt', Filetxt),
 	open(Filetxt, write, Stream),
@@ -180,4 +184,3 @@ save_player(Stream) :-
 	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
 	write(Stream, player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)), nl(Stream),
 	fail.
-

@@ -122,7 +122,7 @@ is_enemy_nearby(X, Y) :-
 /* check enemy same place */
 check_enemy_same :-
 	player(X,Y,_,_,_,_,_),
-	is_enemy_same(X, Y), 
+	is_enemy_same(X, Y),
 	write('There\'s enemy in your sight'), nl, !.
 
 is_enemy_same(X, Y) :-
