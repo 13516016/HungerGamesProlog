@@ -1,5 +1,4 @@
 /* Hentikan semua kegilaan ini */
-
 /* This is command to start the game */
 start :- g_read(started, X), X = 1, write('Game has already started'), nl, fail, !.
 start :-
