@@ -5,20 +5,17 @@ start :-
 	g_read(started, X), X = 0, !,
 	g_assign(started, 1),
 	set_seed(50), randomize,
-	repeat,
-	write('Do you want to load save file or want to start from scratch?? (Press 1 for yes or 0 for no)'),
-	nl, write('> '),
-	read(X), check_load(X),
-	welcome_info, print_player_nearby,
+	init_everything,
 	main_loop.
 
 /* Main loop of the program */
 main_loop :-
+	welcome_info, print_player_nearby,
 	repeat,
 		set_seed(50), randomize,
 		write('\nDo something > '),
 		read(Input),
-		is_input(Input),
+		%is_input(Input),
 		call(Input),
 		is_turn(Input),
 	is_finished(Input), !.
@@ -29,38 +26,37 @@ init_everything :-
 	init_player,
 	init_enemy(10).
 
-/* Check if user want to load from save file */
-check_load(0) :- init_everything, !.
-check_load(1) :- !.
-
 /* Check if input is valid */
-% is_input(listing) :-
+%is_input(listing) :-
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
-is_input(look):-!.
-is_input(save):-!.
-is_input(help):-!.
-is_input(attack):-!.
-is_input(map):-!.
-is_input(n):-!.
-is_input(e):-!.
-is_input(s):-!.
-is_input(w):-!.
-is_input(quit):-!.
-is_input(status):-!.
-is_input(take(_)):-!.
-is_input(use(_)):-!.
-
-is_input(_):- write('Wrong input. Please try again.'),nl,fail,!.
+%is_input(look):-!.
+%is_input(save):-!.
+%is_input(help):-!.
+%is_input(attack):-!.
+%is_input(map):-!.
+%is_input(n):-!.
+%is_input(e):-!.
+%is_input(s):-!.
+%is_input(w):-!.
+%is_input(quit):-!.
+%is_input(status):-!.
+%is_input(take(_)):-!.
+%is_input(use(_)):-!.
+%is_input(load):-!.
+%is_input(pray):-!.
+%is_input(_):- write('Wrong input. Please try again.'),nl,fail,!.
 
 /* Check for command which not make a turn */
 
 /* for save status look map, the player dont make a turn */
+is_turn(load) :- !.
 is_turn(save) :- !.
 is_turn(status) :- !.
 is_turn(look) :- !.
 is_turn(help) :- !.
 is_turn(map) :- !.
 is_turn(listing) :- !.
+is_turn(pray) :- !.
 
 /* make a turn */
 is_turn(attack):-
@@ -132,13 +128,16 @@ is_finished(Input) :-
 is_finished(_) :-
 	get_health(Health),
 	Health =< 0,
-	write('You\' ran out health!'), nl, quit,!.
+	write('You feel that you can\'t continue your study in ITB... You\'re very tired.. It feel sucks...'), nl,
+	write('So you choose to quit from ITB and become a neet...'), quit,!.
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,
-	write('You\'r desperately in need for food! You are dead.'), nl, quit,!.
+	write('You\'re too tired of the food near ITB... You choose to quit from ITB and try the other universities'), nl, 
+	write('.'), nl, write('.'), nl, write('.'), nl, 
+	write('JUST FOR FOOD!'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
-
 	Thirst =< 0,
-	write('You\'thirst to dead.'), nl, quit,!.
+	write('You\'re very thirsty... You feel that if you continue study in ITB.. You will die from dehydration..'), nl, 
+	write('So you choose to quit from ITB.. How weak!'), nl, quit,!.

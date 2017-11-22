@@ -12,7 +12,7 @@ grid(X, Y, Building) :- X is 5, Y >=16, Y=< 17, Building = sadikin, !.
 grid(X, Y, Building) :- X >= 7, X =< 9, Y >= 17, Y =< 19, Building = perpustakaan, !.
 grid(X, Y, Building) :- X is 2, Y is 19, Building = sacred_path, !.
 grid(X, Y, Building) :- X is 7, Y is 7, Building = secret_path, !.
-grid(X, Y, Building) :- Building = blank.
+grid(_, _, Building) :- Building = blank.
 
 /*Location effect*/
 effect_location :-

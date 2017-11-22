@@ -9,6 +9,7 @@ weapon_id(2, anime).
 weapon_id(3, dota).
 weapon_id(4, begadang).
 weapon_id(5, osjur).
+weapon_id(6, mapres).
 
 /* Attack of weapon */
 weapon_atk(webtoon, 10).
@@ -17,6 +18,7 @@ weapon_atk(dota, 30).
 weapon_atk(begadang, 50).
 weapon_atk(osjur, 70).
 weapon_atk(nothing, 0).
+weapon_atk(mapres, 100).
 
 /* Type of item */
 type_item(food, nasi_korea).
@@ -33,6 +35,8 @@ type_item(medicine, uts_100).
 type_item(medicine, kuis_100).
 type_item(medicine, angbis).
 type_item(special, radar).
+type_item(special_eggs, foto_odi).
+type_item(special_eggs, foto_fahmi).
 
 /* Food hunger rate */
 food_rate(1, nasi_korea, 35).
@@ -57,7 +61,7 @@ medicine_rate(3, angbis, 30).
 /* Initialize map with everything */
 
 init_every_item :-
-	init_all_weapon, init_all_drink, init_all_food, init_all_medicine, init_radar, !.
+	init_all_weapon, init_all_drink, init_all_food, init_all_medicine, init_special, !.
 
 /* Initialize map with weapons */
 init_all_weapon :-
@@ -132,12 +136,12 @@ random_medicine :-
 	asserta(location(X, Y, A)).
 
 /* Initialize map with one radar */
-init_radar :-
-	random_radar, !.
+init_special :-
+	random_special(radar), random_special(foto_odi), random_special(foto_fahmi), !.
 
-random_radar :-
+random_special(Special) :-
 	repeat,
 	random(0, 10, X), random(0, 20, Y),
 	grid(X, Y, Loc),
 	Loc \== blank,
-	asserta(location(X, Y, radar)).
+	asserta(location(X, Y, Special)).

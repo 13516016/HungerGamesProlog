@@ -1,4 +1,0 @@
-fact_ku(1)
-fact_ku(2)
-fact_ku(3)
-fact_ku(4)

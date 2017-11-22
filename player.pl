@@ -4,7 +4,7 @@
 default_health(100).
 default_hunger(50).
 default_thirst(50).
-default_weapon(webtoon).
+default_weapon(osjur).
 default_item_list([radar, nasi_korea, aqua, uts_100]).
 
 random_location(X, Y) :-

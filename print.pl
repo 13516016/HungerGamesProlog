@@ -27,9 +27,9 @@ print_format(X,Y):-
     enemy(_,X,Y,_,_),
     print_enemy.
 print_format(X,Y):-
-  location(X,Y,Item),
-  type_item(special,Item),
-  print_radar.
+    location(X,Y,Item),
+    type_item(special,Item),
+    print_radar.
 print_format(X,Y):-
     location(X,Y,Item),
     weapon_id(_,Item),
@@ -64,9 +64,17 @@ print_format(X,Y):-
   print_inaccessible.
 print_format(_,_):-print_accessible.
 
-print_logo :- write('/////'),nl.
+print_logo :- 
+    write('oooo_oooooooo_ooooooo___oo____________oo____oo________________________________________________oooo____________________________________'),nl,
+    write('_oo_____oo____oo____oo__oo__oooo______oo____oo_oo____o_oo_ooo___oooo____ooooo__oo_ooo_______oo____oo__ooooo__oo_oo_oo___ooooo___oooo__'), nl,
+    write('_oo_____oo____oooooooo_oo__oo___o_____oo____oo_oo____o_ooo___o_oo__oo__oo____o_ooo___o_____oo________oo___oo_ooo_oo__o_oo____o_oo___o_'), nl,
+    write('_oo_____oo____oo____oo_______oo_______oooooooo_oo____o_oo____o_oo___o__ooooooo_oo__________oo____ooo_oo___oo_oo__oo__o_ooooooo___oo___'), nl,
+    write('_oo_____oo____oo____oo_____o___oo_____oo____oo_ooo___o_oo____o__oooooo_oo______oo___________oo____oo_oo___oo_oo__oo__o_oo______o___oo_'), nl,
+    write('oooo____oo____ooooooo_______oooo______oo____oo_oo_ooo__oo____o_o____oo__ooooo__oo_____________oooo____oooo_o_oo______o__ooooo___oooo__'), nl,
+    write('________________________________________________________________ooooo_________________________________________________________________'), nl.
 
 welcome_info :-
+    print_logo,
     write('\nWelcome to the ITB\'s Hunger Games!!'), nl,
     write('You have been chosen as our students here... '), nl,
     write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
@@ -171,9 +179,11 @@ print_loc(sadikin) :-
 print_loc(perpustakaan) :-
     write('You are in library... Why are you so ambis?'), nl, !.
 print_loc(sacred_path) :-
-    write('You are in Sacred Path.. Do you know where this path is going to?'), nl, !.
+    write('You are in Sacred Path.. Do you know where this path is going to?'), nl, 
+    write('As you walk, you see something in the wall, You must pray to God... sem09A_M4pr3s'), nl, !.
 print_loc(secret_path) :-
-    write('Secret Path??? For what actually... (Really this is not the easter eggs!)'), nl, !.
+    write('Secret Path??? For what actually... (Really this is not the easter eggs!)'), nl, 
+    write('Wait... you see something.... You see the code : aku_g4_b4s49'), nl, !.
 
 /* print items in your location right now */
 print_items_loc(X, Y) :-
@@ -204,7 +214,11 @@ print_type_item(food, Item) :-
 print_type_item(drink, Item) :-
     format('In the ground, you see the drink.. You see the codename is ~w', [Item]), !.
 print_type_item(medicine, Item) :-
-    format('In the ground, you see the medicine. You see the codename is ~w', [Item]).
+    format('In the ground, you see the medicine. You see the codename is ~w', [Item]), !.
+print_type_item(special, Item) :-
+    format('In the ground, you see special item. You see the codename is ~w. How lucky of you!', [Item]), !.
+print_type_item(special_eggs, Item) :-
+    format('In the ground, you see photo. You see the codename is ~w. What is that?', [Item]).
 
 /* print nearby location*/
 print_player_nearby :-
@@ -266,7 +280,10 @@ print_kantin_borju_effect:-
     write('Yummy! Kantin Borju increased your hunger and thirst by 2 points!'),nl,!.
 
 print_sacred_effect:-
-    write(''), nl.
+    write('You are in sacred place, all your status are increased drastically!'), nl, !.
+
+print_secret_effect:-
+    write('You are in secret place, all your status are healed!'), nl, !.
 
 /* print movement */
 print_move_north :-
@@ -315,3 +332,12 @@ print_fail_kill :-
 
 print_enemy_kill :-
     write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl.
+
+/* print for pray */
+print_good_kid :- write('Because you are a good kid, God answers your prayer... '), nl.
+
+print_give_radar :- 
+    write('God gives you a Radar so you can see you map!'), nl.
+
+print_give_ult_weapon :-
+    write('God gives you a ultimate weapon (mapres) so you can see you map!'), nl.

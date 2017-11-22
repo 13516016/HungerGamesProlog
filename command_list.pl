@@ -90,16 +90,16 @@ map:- get_item_list(ItemList), member(radar,ItemList),print_map(-1,-1),!.
 map:- write('You have to use radar to see the entire map!'),nl.
 
 /*TAKE OBJECT*/
-take(Object):-has_started,
-	Object = radar,
-	take_item(Object),
+take(Object):-
+	has_started, Object = radar, take_item(Object),
 	write('Dude you\'re so lucky! You have picked the radar, the most useful thing in this game (maybe)!'),
 	write(' I bet you\'re also very lucky in your tests!'), nl, !.
-take(Object):-has_started,
-	take_item(Object),
+take(Object):-
+	has_started, take_item(Object),
 	format('You have picked ~w !',[Object]),nl,!.
-take(_):-has_started,
-	write('Really dude? Why did you pick item which is not exist in this map or in this game? Seriously...'),nl,fail.
+take(_):-
+	has_started,
+	write('Really dude? Why did you pick item which is not exist in this map or in this game? Seriously...'),nl, fail.
 
 take_item(Object):-
 	has_started,
@@ -109,6 +109,14 @@ take_item(Object):-
 	retract(location(X,Y,Object)),!.
 
 /*USE OBJECT*/
+use(radar) :-
+	write('Command map to use radar!'), nl, !.
+use(foto_odi) :-
+	player(_,_,_,_,_,_,ListItem),
+	member(foto_odi, ListItem), !.
+use(foto_fahmi) :-
+	player(_,_,_,_,_,_,ListItem),
+	member(foto_fahmi, ListItem), !.
 use(Object) :-
 	player(_,_,_,_,_,Weapon,ListItem),
 	member(Object, ListItem),
@@ -117,13 +125,11 @@ use(Object) :-
 	set_weapon(Object),
 	add_item(Weapon),
 	format('You switched your weapon to ~w !', [Object]), nl, !.
-
 use(Object) :-
 	player(_,_,_,_,_,_,ListItem),
 	member(Object, ListItem),
 	del_item(Object),
 	effect(Object), nl, !.
-
 use(_) :-
 	write('Dude... You don\'t have that item in your inventory!'), nl.
 
@@ -146,7 +152,6 @@ give_effect(medicine, Object) :-
 	increase_health(Rate),
 	print_increase_health(Object,Rate).
 
-
 /*PRINT STATUS*/
 status :-
 	has_started,
@@ -158,29 +163,64 @@ save:-
 	write('> '), read(File),
 	atom_concat(File, '.txt', Filetxt),
 	open(Filetxt, write, Stream),
-	set_output(Stream), listing, nl,
-	close(Stream), 	write('Your file was saved !').
+	save_all_fact(Stream),
+	close(Stream), 	write('Your file was saved !'), nl.
 
+load :-
+	write('Please input the file load!'), nl,
+	write('>'), read(File),
+	atom_concat(File, '.txt', Filetxt),
+	load_all_fact(Filetxt).
 
-% save_all_fact(Stream) :-
-%	save_location(Stream).
-% save_all_fact(Stream) :-
-%	save_player(Stream).
-% save_all_fact(Stream) :-
-%	save_enemies(Stream).
-% save_all_fact(_) :- !.
+load_all_fact(Filetxt):-
+	retractall(enemy(_,_,_,_,_)), 
+	retractall(player(_,_,_,_,_,_,_)), 
+	retractall(location(_,_,_)),
+	open(Filetxt, read, Stream),
+	repeat,
+		read(Stream, In),
+		asserta(In),
+	at_end_of_stream(Stream),
+	close(Stream),
+	write('Your File is loaded!'), nl, !.
+load_all_fact(_):-
+	write('Your input is wrong!'), nl, fail.
 
-% save_location(Stream) :-
-%	location(X,Y,Item),
-%	write(Stream, location(X,Y,Item)), nl(Stream),
-%	fail.
+save_all_fact(Stream) :-
+	save_location(Stream).
+save_all_fact(Stream) :-
+	save_player(Stream).
+save_all_fact(Stream) :-
+	save_enemies(Stream).
+save_all_fact(_) :- !.
 
-% save_enemies(Stream) :-
-% 	enemy(EnemyID, X, Y, Health, Atk),
-%	write(Stream, enemy(EnemyID, X, Y, Health, Atk)), nl(Stream),
-%	fail.
+save_location(Stream) :-
+	location(X,Y,Item),
+	write(Stream, location(X,Y,Item)), write(Stream, '.'), nl(Stream),
+	fail.
 
-% save_player(Stream) :-
-%	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-%	write(Stream, player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)), nl(Stream),
-%	fail.
+save_enemies(Stream) :-
+ 	enemy(EnemyID, X, Y, Health, Atk),
+	write(Stream, enemy(EnemyID, X, Y, Health, Atk)), write(Stream, '.'), nl(Stream),
+	fail.
+
+save_player(Stream) :-
+	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+	write(Stream, player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)), write(Stream, '.'), nl(Stream),
+	fail.
+
+/*****BONUS*****/
+
+/* Pray to God */
+pray :-
+	write('What is the code ?'), nl, write('>'),
+	read(Ourcode), pray_answer(Ourcode).
+
+pray_answer(aku_g4_b4s49) :-
+	print_good_kid, print_give_radar, add_item(radar), !.
+pray_answer(sem09A_M4pr3s) :-
+	print_good_kid, print_give_ult_weapon, add_item(mapres), !.	
+pray_answer(_) :-
+	write('Your prayer is wrong!'), nl, fail.
+
+	
