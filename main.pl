@@ -39,6 +39,7 @@ check_load(1) :- !.
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
 is_input(look):-!.
 is_input(save):-!.
+is_input(help):-!.
 is_input(attack):-!.
 is_input(map):-!.
 is_input(n):-!.
@@ -58,6 +59,7 @@ is_input(_):- write('Wrong input. Please try again.'),nl,fail,!.
 is_turn(save) :- !.
 is_turn(status) :- !.
 is_turn(look) :- !.
+is_turn(help) :- !.
 is_turn(map) :- !.
 is_turn(listing) :- !.
 
@@ -65,19 +67,23 @@ is_turn(listing) :- !.
 is_turn(attack):-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(attack):-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(n) :-
 	check_enemy_same,
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(n) :-
 	generate_random_move(10),
 	decrease_hunger(2),
-	decrease_thirst(2),!.
+	decrease_thirst(2),
+	effect_location,!.
 is_turn(e) :-
 	check_enemy_same,
 	decrease_hunger(2),
@@ -134,5 +140,6 @@ is_finished(_) :-
 	write('You\'r desperately in need for food! You are dead.'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
+
 	Thirst =< 0,
 	write('You\'thirst to dead.'), nl, quit,!.

@@ -40,7 +40,6 @@ increase_health(Amount):-
 decrease_health(Amount):-
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
     ResultHealth is Health-Amount,
-    print_decrease_health(Amount),
     asserta(player(X,Y,ResultHealth,Hunger,Thirst,Weapon,ItemList)).
 
 get_health(Health):-
