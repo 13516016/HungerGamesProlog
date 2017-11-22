@@ -38,6 +38,7 @@ check_load(1) :- !.
 % is_input(listing) :-
 % 	nl, write('Yo dude don\'t cheat..\n'), nl, !, fail.
 is_input(look):-!.
+is_input(save):-!.
 is_input(attack):-!.
 is_input(map):-!.
 is_input(n):-!.
@@ -62,9 +63,13 @@ is_turn(listing) :- !.
 
 /* make a turn */
 is_turn(attack):-
-	check_enemy_same,!.
+	check_enemy_same,
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(attack):-
-	generate_random_move(10),!.
+	generate_random_move(10),
+	decrease_hunger(2),
+	decrease_thirst(2),!.
 is_turn(n) :-
 	check_enemy_same,
 	decrease_hunger(2),

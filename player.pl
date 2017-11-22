@@ -2,10 +2,10 @@
 
 /* The default of the status after start */
 default_health(100).
-default_hunger(20).
+default_hunger(50).
 default_thirst(50).
 default_weapon(webtoon).
-default_item_list([radar]).
+default_item_list([radar, nasi_korea, aqua, uts_100]).
 
 random_location(X, Y) :-
     repeat,
@@ -28,10 +28,9 @@ init_player:-
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
-    ResultHealth > 100,
+    ResultHealth > 150,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,100,Hunger,Thirst,Weapon,ItemList)).
-
+    asserta(player(X,Y,150,Hunger,Thirst,Weapon,ItemList)).
 increase_health(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHealth is Health+Amount,
@@ -51,9 +50,9 @@ get_health(Health):-
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHunger is Hunger+Amount,
-    ResultHunger > 50,
+    ResultHunger > 100,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,Health,50,Thirst,Weapon,ItemList)), !.
+    asserta(player(X,Y,Health,100,Thirst,Weapon,ItemList)), !.
 increase_hunger(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultHunger is Hunger+Amount,
@@ -72,9 +71,9 @@ get_hunger(Hunger):-
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultThirst is Thirst+Amount,
-    ResultThirst > 50,
+    ResultThirst > 100,
     retract(player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)),
-    asserta(player(X,Y,Health,Hunger,50,Weapon,ItemList)), !.
+    asserta(player(X,Y,Health,Hunger,100,Weapon,ItemList)), !.
 increase_thirst(Amount):-
     player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
     ResultThirst is Thirst+Amount,

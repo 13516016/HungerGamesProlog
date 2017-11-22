@@ -122,9 +122,8 @@ is_enemy_nearby(X, Y) :-
 /* check enemy same place */
 check_enemy_same :-
 	player(X,Y,_,_,_,_,_),
-	is_enemy_same(X, Y), !.
-% check_enemy_same :-
-%	write('Theres no enemy in your sight'), nl, fail.
+	is_enemy_same(X, Y), 
+	write('There\'s enemy in your sight'), nl, !.
 
 is_enemy_same(X, Y) :-
 	enemy(_, A, B, _, _),
