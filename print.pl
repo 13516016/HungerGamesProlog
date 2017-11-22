@@ -254,21 +254,24 @@ print_nearby_loc(Direction, blank):-
 
 /*Location effect*/
 print_sadikin_effect:-
-  write('You are in the most favorable place for ITB Students! Sadikin! You replenished your health.'),nl,!.
+    write('You are in the most favorable place for ITB Students! Sadikin! Your health increased.'),nl,!.
 
 print_ruang_ujian_effect:-
-  write('The pressure in Ruang Ujian is so tense.... You can\'t bear it. Your health is decreased by 2.'),nl,!.
+    write('The pressure in Ruang Ujian is so tense.... You can\'t bear it. Your health is decreased by 2.'),nl,!.
 
 print_kandom_effect:-
-  write('You are being agitated by seniors on Kandom! Your health is decreased by 5.'),nl,!.
+    write('You are being agitated by seniors on Kandom! Your health is decreased by 5.'),nl,!.
 
 print_kantin_borju_effect:-
-  write('Yummy! Kantin Borju increased your hunger and thirst by 2 points!'),nl,!.
+    write('Yummy! Kantin Borju increased your hunger and thirst by 2 points!'),nl,!.
 
+print_sacred_effect:-
+    write(''), nl.
 
 /* print movement */
 print_move_north :-
     write('From your place, you move to the north...'), nl.
+
 print_move_south :-
     write('From your place, you move to the south...'), nl.
 
@@ -289,19 +292,19 @@ fail_move :-
 /* print for player */
 print_increase_health(Object, Rate) :-
     format('As you use ~w... ', [Object]), format('You feel the power of the medicine.. Your Health is increased by ~w!', [Rate]), nl,
-    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]).
 
 print_increase_hunger(Object, Rate) :-
     format('As you eat ~w... ', [Object]), format('You don\'t feel hungry anymore.. Your Hunger is increased by ~w!', [Rate]), nl,
-    player(_,_,_,Hunger,_,_,_), format('Your Hunger now is ~w', [Hunger]), nl.
+    player(_,_,_,Hunger,_,_,_), format('Your Hunger now is ~w', [Hunger]).
 
 print_increase_thirst(Object, Rate) :-
     format('As you drink ~w... ', [Object]), format('You don\'t feel thirsty anymore.. Your Thirst is increased by ~w!', [Rate]), nl,
-    player(_,_,_,_,Thirst,_,_), format('Your Thirst now is ~w', [Thirst]), nl.
+    player(_,_,_,_,Thirst,_,_), format('Your Thirst now is ~w', [Thirst]).
 
 print_decrease_health(Amount) :-
     format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl,
-    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]).
 
 print_inflict_damage(Amount):-
     format('You deal ~w damage to the enemy!', [Amount]),nl.

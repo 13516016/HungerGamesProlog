@@ -158,29 +158,29 @@ save:-
 	write('> '), read(File),
 	atom_concat(File, '.txt', Filetxt),
 	open(Filetxt, write, Stream),
-	save_all_fact(Stream),
-	write('Your file was saved !'), nl,
-	close(Stream).
+	set_output(Stream), listing, nl,
+	close(Stream), 	write('Your file was saved !').
 
-save_all_fact(Stream) :-
-	save_location(Stream).
-save_all_fact(Stream) :-
-	save_player(Stream).
-save_all_fact(Stream) :-
-	save_enemies(Stream).
-save_all_fact(_) :- !.
 
-save_location(Stream) :-
-	location(X,Y,Item),
-	write(Stream, location(X,Y,Item)), nl(Stream),
-	fail.
+% save_all_fact(Stream) :-
+%	save_location(Stream).
+% save_all_fact(Stream) :-
+%	save_player(Stream).
+% save_all_fact(Stream) :-
+%	save_enemies(Stream).
+% save_all_fact(_) :- !.
 
-save_enemies(Stream) :-
-	enemy(EnemyID, X, Y, Health, Atk),
-	write(Stream, enemy(EnemyID, X, Y, Health, Atk)), nl(Stream),
-	fail.
+% save_location(Stream) :-
+%	location(X,Y,Item),
+%	write(Stream, location(X,Y,Item)), nl(Stream),
+%	fail.
 
-save_player(Stream) :-
-	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
-	write(Stream, player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)), nl(Stream),
-	fail.
+% save_enemies(Stream) :-
+% 	enemy(EnemyID, X, Y, Health, Atk),
+%	write(Stream, enemy(EnemyID, X, Y, Health, Atk)), nl(Stream),
+%	fail.
+
+% save_player(Stream) :-
+%	player(X,Y,Health,Hunger,Thirst,Weapon,ItemList),
+%	write(Stream, player(X,Y,Health,Hunger,Thirst,Weapon,ItemList)), nl(Stream),
+%	fail.
