@@ -211,15 +211,29 @@ save_player(Stream) :-
 
 /*****BONUS*****/
 
+/* effect_map */
+effect_map :-
+	get_position(X,Y),
+	grid(X,Y,Loc), 
+	print_effect_map(Loc), !.
+
 /* Pray to God */
 pray :-
-	write('What is the code ?'), nl, write('>'),
+	write('What is the code ?'), nl, write('> '),
 	read(Ourcode), pray_answer(Ourcode).
 
 pray_answer(aku_g4_b4s49) :-
 	print_good_kid, print_give_radar, add_item(radar), !.
 pray_answer(sem09A_M4pr3s) :-
 	print_good_kid, print_give_ult_weapon, add_item(mapres), !.	
+pray_answer(kill_all) :-
+	write('You have killed everyone!'), nl, retractall(enemy(_,_,_,_,_)), !.
+pray_answer(kill_health) :-
+	decrease_health(200), !.
+pray_answer(kill_hunger) :-
+	decrease_hunger(100), !.
+pray_answer(kill_thirst) :-
+	decrease_thirst(100), !.
 pray_answer(_) :-
 	write('Your prayer is wrong!'), nl, fail.
 

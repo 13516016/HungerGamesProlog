@@ -17,8 +17,7 @@ main_loop :-
 		read(Input),
 		%is_input(Input),
 		call(Input),
-		is_turn(Input),
-	is_finished(Input), !.
+	is_turn(Input), is_finished(Input), !.
 
 /* Init everything when game started without load */
 init_everything :-
@@ -126,10 +125,13 @@ is_turn(_) :- effect_location,!.
 is_finished(Input) :-
 	Input = quit, !.
 is_finished(_) :-
+	\+ enemy(_,_,_,_,_),
+	write('You have won the game! Congrats!'), nl, quit, !.
+is_finished(_) :-
 	get_health(Health),
 	Health =< 0,
 	write('You feel that you can\'t continue your study in ITB... You\'re very tired.. It feel sucks...'), nl,
-	write('So you choose to quit from ITB and become a neet...'), quit,!.
+	write('So you choose to quit from ITB and become a neet...'), nl, quit,!.
 is_finished(_) :-
 	get_hunger(Hunger),
 	Hunger =< 0,
