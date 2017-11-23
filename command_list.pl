@@ -215,7 +215,7 @@ save_player(Stream) :-
 effect_map :-
 	get_position(X,Y),
 	grid(X,Y,Loc), 
-	print_effect_map(Loc), !.
+	!.
 
 /* Pray to God */
 pray :-
