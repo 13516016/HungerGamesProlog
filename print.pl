@@ -65,19 +65,20 @@ print_format(X,Y):-
 print_format(_,_):-print_accessible.
 
 print_logo :- 
-    write('oooo_oooooooo_ooooooo___oo____________oo____oo________________________________________________oooo____________________________________'),nl,
-    write('_oo_____oo____oo____oo__oo__oooo______oo____oo_oo____o_oo_ooo___oooo____ooooo__oo_ooo_______oo____oo__ooooo__oo_oo_oo___ooooo___oooo__'), nl,
-    write('_oo_____oo____oooooooo_oo__oo___o_____oo____oo_oo____o_ooo___o_oo__oo__oo____o_ooo___o_____oo________oo___oo_ooo_oo__o_oo____o_oo___o_'), nl,
-    write('_oo_____oo____oo____oo_______oo_______oooooooo_oo____o_oo____o_oo___o__ooooooo_oo__________oo____ooo_oo___oo_oo__oo__o_ooooooo___oo___'), nl,
-    write('_oo_____oo____oo____oo_____o___oo_____oo____oo_ooo___o_oo____o__oooooo_oo______oo___________oo____oo_oo___oo_oo__oo__o_oo______o___oo_'), nl,
-    write('oooo____oo____ooooooo_______oooo______oo____oo_oo_ooo__oo____o_o____oo__ooooo__oo_____________oooo____oooo_o_oo______o__ooooo___oooo__'), nl,
-    write('________________________________________________________________ooooo_________________________________________________________________'), nl.
+    nl,
+    write('_____oooo_oooooooo_ooooooo___oo____________oo____oo________________________________________________oooo_______________________________________'), nl,
+    write('______oo_____oo____oo____oo__oo__oooo______oo____oo_oo____o_oo_ooo___oooo____ooooo__oo_ooo_______oo____oo__ooooo__oo_oo_oo___ooooo___oooo_____'), nl,
+    write('______oo_____oo____oooooooo_oo__oo___o_____oo____oo_oo____o_ooo___o_oo__oo__oo____o_ooo___o_____oo________oo___oo_ooo_oo__o_oo____o_oo___o____'), nl,
+    write('______oo_____oo____oo____oo_______oo_______oooooooo_oo____o_oo____o_oo___o__ooooooo_oo__________oo____ooo_oo___oo_oo__oo__o_ooooooo___oo______'), nl,
+    write('______oo_____oo____oo____oo_____o___oo_____oo____oo_ooo___o_oo____o__oooooo_oo______oo___________oo____oo_oo___oo_oo__oo__o_oo______o___oo____'), nl,
+    write('_____oooo____oo____ooooooo_______oooo______oo____oo_oo_ooo__oo____o_o____oo__ooooo__oo_____________oooo____oooo_o_oo______o__ooooo___oooo_____'), nl,
+    write('_____________________________________________________________________ooooo____________________________________________________________________'), nl.
 
 welcome_info :-
     print_logo,
-    write('\nWelcome to the ITB\'s Hunger Games!!'), nl,
-    write('You have been chosen as our students here... '), nl,
-    write('So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
+    write('\n                                            Welcome to the ITB\'s Hunger Games!!'), nl,
+    write('                                         You have been chosen as our students here... '), nl,
+    write('                        So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
     print_start_help,
     print_legend,
     nl.
@@ -136,9 +137,6 @@ print_radar:- write('  R  ').
 print_enemy:- write('  E  ').
 print_accessible:- write('  -  ').
 print_inaccessible:- write('XXXXX').
-
-/* to clear screen of terminal */
-clear_screen:-nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl,nl.
 
 /* print status of the user */
 print_status :-

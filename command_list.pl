@@ -42,7 +42,7 @@ w :- fail_move, fail.
 
 /*QUIT*/
 quit :-
-	has_started,
+	has_started, nl,
 	write('Thank you for playing this game!'), nl,
 	halt.
 
@@ -210,12 +210,6 @@ save_player(Stream) :-
 	fail.
 
 /*****BONUS*****/
-
-/* effect_map */
-effect_map :-
-	get_position(X,Y),
-	grid(X,Y,Loc), 
-	!.
 
 /* Pray to God */
 pray :-

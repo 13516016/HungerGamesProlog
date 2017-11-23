@@ -23,6 +23,14 @@ effect_location :-
   increase_thirst(100),
   print_sacred_effect.
 
+effect_location :-
+  get_position(X,Y),
+  grid(X,Y,secret_path),
+  increase_health(150),
+  increase_hunger(100),
+  increase_thirst(100),
+  print_secret_effect.
+
 effect_location:-
   get_position(X,Y),
   grid(X,Y,sadikin),

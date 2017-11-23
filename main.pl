@@ -69,17 +69,7 @@ is_turn(attack):-
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(n) :-
-	check_enemy_same,
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(n) :-
 	generate_random_move(10),
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(e) :-
-	check_enemy_same,
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
@@ -89,28 +79,12 @@ is_turn(e) :-
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(w) :-
-	check_enemy_same,
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(w) :-
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(s) :-
-	check_enemy_same,
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(s) :-
 	generate_random_move(10),
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(_) :-
-	check_enemy_same,
-	enemy_attack,
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.

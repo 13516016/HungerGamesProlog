@@ -38,6 +38,8 @@ generate_random_move(N) :- random_move(N), M is N-1, generate_random_move(M).
 
  /* Make random move for an enemy until enemy can move*/
 random_move(EnemyID) :-
+	get_position(X,Y), is_enemy_same(X,Y), !.
+random_move(EnemyID) :-
 	random(1, 6, X),
 	select_step(EnemyID, X), !.
 random_move(_) :- !.
