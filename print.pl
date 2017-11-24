@@ -64,7 +64,7 @@ print_format(X,Y):-
   print_inaccessible.
 print_format(_,_):-print_accessible.
 
-print_logo :- 
+print_logo :-
     nl,
     write('_____oooo_oooooooo_ooooooo___oo____________oo____oo________________________________________________oooo_______________________________________'), nl,
     write('______oo_____oo____oo____oo__oo__oooo______oo____oo_oo____o_oo_ooo___oooo____ooooo__oo_ooo_______oo____oo__ooooo__oo_oo_oo___ooooo___oooo_____'), nl,
@@ -185,10 +185,10 @@ print_loc(sadikin) :-
 print_loc(perpustakaan) :-
     write('You are in library... Why are you so ambis?'), nl, !.
 print_loc(sacred_path) :-
-    write('You are in Sacred Path.. Do you know where this path is going to?'), nl, 
+    write('You are in Sacred Path.. Do you know where this path is going to?'), nl,
     write('As you walk, you see something in the wall, You must pray to God... sem09A_M4pr3s'), nl, !.
 print_loc(secret_path) :-
-    write('Secret Path??? For what actually... (Really this is not the easter eggs!)'), nl, 
+    write('Secret Path??? For what actually... (Really this is not the easter eggs!)'), nl,
     write('Wait... you see something.... You see the code : aku_g4_b4s49'), nl, !.
 
 /* print items in your location right now */
@@ -322,11 +322,13 @@ print_fail_kill :-
 print_enemy_kill :-
     write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl.
 
+print_drop_item :-
+    write('The enemy dropped an item!'),nl.
 /*********** BONUS ***********/
 /* print for pray */
 print_good_kid :- write('Because you are a good kid, God answers your prayer... '), nl.
 
-print_give_radar :- 
+print_give_radar :-
     write('God gives you a Radar so you can see you map!'), nl.
 
 print_give_ult_weapon :-

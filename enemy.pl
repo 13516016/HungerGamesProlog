@@ -21,12 +21,16 @@ decrease_enemy_health(EnemyID, Amount):-
  	retract(enemy(EnemyID, X, Y, Health, Atk)),
 	asserta(enemy(EnemyID, X, Y, ResultHealth, Atk)), !.
 
+% enemy dead
 decrease_enemy_health(EnemyID, Amount):-
 	enemy(EnemyID, X, Y, Health, Atk),
 	ResultHealth is Health-Amount,
 	ResultHealth =< 0,
 	print_enemy_kill,
+	print_drop_item,
+	drop_item(X,Y),
 	retract(enemy(EnemyID, X, Y, Health, Atk)).
+
 
 % Position
 get_enemy_position(EnemyID, X, Y):-
@@ -130,3 +134,45 @@ check_enemy_same :-
 is_enemy_same(X, Y) :-
 	enemy(_, A, B, _, _),
 	A =:= X, B =:= Y, !.
+
+
+% Drop random item
+drop_item(X,Y):-
+	random(1,5,Rand),
+	Rand is 1,
+	drop_food(X,Y),!.
+
+drop_item(X,Y):-
+	random(1,5,Rand),
+	Rand is 2,
+	drop_drink(X,Y),!.
+
+drop_item(X,Y):-
+	random(1,5,Rand),
+	Rand is 3,
+	drop_medicine(X,Y),!.
+
+drop_item(X,Y):-
+	random(1,5,Rand),
+	Rand is 4,
+	drop_weapon(X,Y),!.
+
+drop_food(X,Y):-
+	random(1, 6, N),
+	food_rate(N,A,_),
+	asserta(location(X,Y,A)).
+
+drop_drink(X,Y):-
+	random(1, 6, N),
+	drink_rate(N,A,_),
+	asserta(location(X,Y,A)).
+
+drop_medicine(X,Y):-
+	random(1, 6, N),
+	drink_rate(N,A,_),
+	asserta(location(X,Y,A)).
+
+drop_weapon(X,Y):-
+	random(1,6,N),
+	weapon_id(N,A),
+	asserta(location(X,Y,A)).

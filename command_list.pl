@@ -103,7 +103,7 @@ take(Object):-
 	has_started, take_item(Object), nl,
 	format('You have picked ~w !',[Object]),nl,!.
 take(_):-
-	has_started, nl, 
+	has_started, nl,
 	write('Really dude? Why did you pick item which is not exist in this map or in this game? Seriously...'),nl, fail.
 /* player take the item to ItemList */
 take_item(Object):-
@@ -204,8 +204,8 @@ load :-
 	load_all_fact(Filetxt).
 
 load_all_fact(Filetxt):-
-	retractall(enemy(_,_,_,_,_)), 
-	retractall(player(_,_,_,_,_,_,_)), 
+	retractall(enemy(_,_,_,_,_)),
+	retractall(player(_,_,_,_,_,_,_)),
 	retractall(location(_,_,_)),
 	open(Filetxt, read, Stream),
 	repeat,
@@ -227,7 +227,7 @@ pray :-
 pray_answer(aku_g4_b4s49) :-
 	print_good_kid, print_give_radar, add_item(radar), !.
 pray_answer(sem09A_M4pr3s) :-
-	print_good_kid, print_give_ult_weapon, add_item(mapres), !.	
+	print_good_kid, print_give_ult_weapon, add_item(mapres), !.
 /* this is the testing */
 pray_answer(kill_all) :-
 	write('You have killed everyone!'), nl, retractall(enemy(_,_,_,_,_)), !.
@@ -242,7 +242,7 @@ pray_answer(_) :-
 
 /* Thunder Bolt a.k.a tugas besar*/
 tugas_besar :-
-	decrease_health(20), print_tugas_besar, 
+	decrease_health(20), print_tugas_besar,
 	get_position(X,Y),
 	kill_enemy_nearby(X,Y), !.
 
@@ -256,12 +256,12 @@ kill_enemy_nearby(X,Y) :-
 	Xplus is X + 1, Ymin is Y - 1,
 	retractall(enemy(_,Xplus,Ymin,_,_)).
 kill_enemy_nearby(X,Y) :-
-	Xmin is X - 1, 
+	Xmin is X - 1,
 	retractall(enemy(_,Xmin,Y,_,_)).
 kill_enemy_nearby(X,Y) :-
 	retractall(enemy(_,X,Y,_,_)).
 kill_enemy_nearby(X,Y) :-
-	Xplus is X + 1, 
+	Xplus is X + 1,
 	retractall(enemy(_,Xplus,Y,_,_)).
 kill_enemy_nearby(X,Y) :-
 	Xmin is X - 1, Yplus is Y + 1,

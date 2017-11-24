@@ -3,7 +3,7 @@
 /* All items added as facts */
 
 /* Id of weapon */
-weapon_id(6, nothing).
+weapon_id(0, nothing).
 weapon_id(1, webtoon).
 weapon_id(2, anime).
 weapon_id(3, dota).
