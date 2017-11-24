@@ -59,37 +59,37 @@ is_turn(pray) :- !.
 
 /* make a turn */
 is_turn(attack):-
-	check_enemy_same,
-	decrease_hunger(2),
-	decrease_thirst(2),
-	effect_location,!.
-is_turn(attack):-
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(n) :-
+	enemy_attack, 
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(e) :-
+	enemy_attack,
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(w) :-
+	enemy_attack,
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(s) :-
+	enemy_attack,
 	generate_random_move(10),
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
 is_turn(_) :-
 	generate_random_move(10),
+	enemy_attack,
 	decrease_hunger(2),
 	decrease_thirst(2),
 	effect_location,!.
@@ -99,21 +99,21 @@ is_turn(_) :- effect_location,!.
 is_finished(Input) :-
 	Input = quit, !.
 is_finished(_) :-
-	\+ enemy(_,_,_,_,_),
+	\+ enemy(_,_,_,_,_), nl,
 	write('You have won the game! Congrats!'), nl, quit, !.
 is_finished(_) :-
 	get_health(Health),
-	Health =< 0,
+	Health =< 0, nl,
 	write('You feel that you can\'t continue your study in ITB... You\'re very tired.. It feel sucks...'), nl,
 	write('So you choose to quit from ITB and become a neet...'), nl, quit,!.
 is_finished(_) :-
 	get_hunger(Hunger),
-	Hunger =< 0,
+	Hunger =< 0, nl,
 	write('You\'re too tired of the food near ITB... You choose to quit from ITB and try the other universities'), nl, 
 	write('.'), nl, write('.'), nl, write('.'), nl, 
 	write('JUST FOR FOOD!'), nl, quit,!.
 is_finished(_) :-
 	get_thirst(Thirst),
-	Thirst =< 0,
+	Thirst =< 0, nl,
 	write('You\'re very thirsty... You feel that if you continue study in ITB.. You will die from dehydration..'), nl, 
 	write('So you choose to quit from ITB.. How weak!'), nl, quit,!.

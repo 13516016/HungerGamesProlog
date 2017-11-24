@@ -14,46 +14,46 @@ grid(X, Y, Building) :- X is 2, Y is 19, Building = sacred_path, !.
 grid(X, Y, Building) :- X is 7, Y is 7, Building = secret_path, !.
 grid(_, _, Building) :- Building = blank.
 
-/*Location effect*/
+/* Location effect */
 effect_location :-
-  get_position(X,Y),
-  grid(X,Y,sacred_path),
-  increase_health(150),
-  increase_hunger(100),
-  increase_thirst(100),
-  print_sacred_effect.
+    get_position(X,Y),
+    grid(X,Y,sacred_path),
+    increase_health(150),
+    increase_hunger(100),
+    increase_thirst(100),
+    print_sacred_effect.
 
 effect_location :-
-  get_position(X,Y),
-  grid(X,Y,secret_path),
-  increase_health(150),
-  increase_hunger(100),
-  increase_thirst(100),
-  print_secret_effect.
+    get_position(X,Y),
+    grid(X,Y,secret_path),
+    increase_health(150),
+    increase_hunger(100),
+    increase_thirst(100),
+    print_secret_effect.
 
 effect_location:-
-  get_position(X,Y),
-  grid(X,Y,sadikin),
-  increase_health(10),
-  print_sadikin_effect.
+    get_position(X,Y),
+    grid(X,Y,sadikin),
+    increase_health(10),
+    print_sadikin_effect.
 
 effect_location:-
-  get_position(X,Y),
-  grid(X,Y,ruang_ujian),
-  decrease_health(2),
-  print_ruang_ujian_effect.
+    get_position(X,Y),
+    grid(X,Y,ruang_ujian),
+    decrease_health(2),
+    print_ruang_ujian_effect.
 
 effect_location:-
-  get_position(X,Y),
-  grid(X,Y,kandom),
-  decrease_health(5),
-  print_kandom_effect.
+    get_position(X,Y),
+    grid(X,Y,kandom),
+    decrease_health(5),
+    print_kandom_effect.
 
 effect_location:-
-  get_position(X,Y),
-  grid(X,Y,kantin_borju),
-  increase_hunger(2),
-  increase_thirst(2),
-  print_kantin_borju_effect.
+    get_position(X,Y),
+    grid(X,Y,kantin_borju),
+    increase_hunger(2),
+    increase_thirst(2),
+    print_kantin_borju_effect.
 
 effect_location:-!.

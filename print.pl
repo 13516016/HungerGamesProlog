@@ -75,10 +75,10 @@ print_logo :-
     write('_____________________________________________________________________ooooo____________________________________________________________________'), nl.
 
 welcome_info :-
-    print_logo,
-    write('\n                                            Welcome to the ITB\'s Hunger Games!!'), nl,
-    write('                                         You have been chosen as our students here... '), nl,
-    write('                        So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
+    print_logo, nl,
+    write('                                                Welcome to the ITB\'s Hunger Games!!'), nl,
+    write('                                            You have been chosen as our students here... '), nl,
+    write('                         So.. Please gradute from here with your best shot and try not to dropout from here~\n'), nl,
     print_start_help,
     print_legend,
     nl.
@@ -92,7 +92,7 @@ print_start_help :-
 
 /* This is for the command list when user input help */
 print_help :-
-    write('--------------------------------COMMAND LIST--------------------------------'),nl,
+    nl, write('--------------------------------COMMAND LIST--------------------------------'),nl,
     nl,
     print_command_list.
 
@@ -111,8 +111,9 @@ print_command_list :-
     write('-- use(Object).            | '), write('Use an object from the inventory.'),nl,
     write('-- attack.                 | '), write('Attack enemy.'),nl,
     write('-- status.                 | '), write('Show your status.'),nl,
-    write('-- save(Filename).         | '), write('Save the game with the given file name.'),nl,
-    write('-- load(Filename).         | '), write('Load the game from the given file name.'),nl.
+    write('-- save.                   | '), write('Save the game with the given file name.'),nl,
+    write('-- load.                   | '), write('Load the game from the given file name.'),nl,
+    write('-- tugas_besar.            | '), write('It\'s your magic.'), nl.
 
 /* this is to print legend in game */
 print_legend :-
@@ -145,7 +146,7 @@ print_status :-
     get_thirst(Thirst),
     get_weapon(Weapon),
     get_position(X,Y),
-    get_item_list(Items),
+    get_item_list(Items), nl,
     write('Health     : '), write(Health), nl,
     write('Hunger     : '), write(Hunger), nl,
     write('Thirst     : '), write(Thirst), nl,
@@ -156,9 +157,16 @@ print_status :-
     write(Items).
 
 /* print location player right now */
-print_player_loc(X, Y) :-
-    grid(X, Y, Loc),
-    print_loc(Loc).
+print_player_nearby :-
+    get_position(X,Y), print_player_loc(X,Y), !.
+
+print_player_loc(X,Y) :-
+    check_enemy_nearby,
+    grid(X, Y, Loc), nl,
+    print_loc(Loc), write('You also sense that there\'s enemy nearby..'), nl, !.
+print_player_loc(X,Y) :-
+    grid(X,Y,Loc), nl,
+    print_loc(Loc), !.
 
 print_loc(kantin_borju):-
     write('You are in Kantin Borju right now.. It is such a good place to eat but more expensive thant the others..'), nl, !.
@@ -184,10 +192,6 @@ print_loc(secret_path) :-
     write('Wait... you see something.... You see the code : aku_g4_b4s49'), nl, !.
 
 /* print items in your location right now */
-print_items_loc(X, Y) :-
-    check_enemy_same,
-    location(X, Y, _),
-    print_item_loc(X, Y), !.
 print_items_loc(X, Y) :-
     location(X, Y, _),
     print_item_loc(X, Y), !.
@@ -218,20 +222,7 @@ print_type_item(special, Item) :-
 print_type_item(special_eggs, Item) :-
     format('In the ground, you see photo. You see the codename is ~w. What is that?', [Item]).
 
-/* print nearby location*/
-print_player_nearby :-
-    check_enemy_nearby,
-    get_position(X,Y), grid(X,Y,Loc),
-    Xplus is X + 1, Yplus is Y + 1,
-    Xmin is X - 1, Ymin is Y - 1,
-    print_loc(Loc), write('You also sense that there\'s enemy nearby..'), nl, !.
-
-print_player_nearby :-
-    get_position(X,Y), grid(X,Y,Loc),
-    Xplus is X + 1, Yplus is Y + 1,
-    Xmin is X - 1, Ymin is Y - 1,
-    print_loc(Loc).
-
+/* print nearby location */
 print_north(X,Y) :-
     grid(X,Y,Loc), print_nearby_loc(north, Loc).
 print_south(X,Y) :-
@@ -285,41 +276,41 @@ print_secret_effect:-
 
 /* print movement */
 print_move_north :-
-    write('From your place, you move to the north...'), nl.
+    nl, write('From your place, you move to the north...'), nl.
 
 print_move_south :-
-    write('From your place, you move to the south...'), nl.
+    nl, write('From your place, you move to the south...'), nl.
 
 print_move_east :-
-    write('From your place, you move to the east...'), nl.
+    nl, write('From your place, you move to the east...'), nl.
 
 print_move_west :-
-    write('From your place, you move to the west...'), nl.
+    nl, write('From your place, you move to the west...'), nl.
 
 /* print fail attack */
 fail_attack :-
-    write('There\'s no enemy in your sight !'), nl.
+    nl, write('There\'s no enemy in your sight !'), nl.
 
 /* print fail move */
 fail_move :-
-    write('You can\'t move!'), nl.
+    nl, write('You can\'t move!'), nl.
 
 /* print for player */
 print_increase_health(Object, Rate) :-
-    format('As you use ~w... ', [Object]), format('You feel the power of the medicine.. Your Health is increased by ~w!', [Rate]), nl,
-    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]).
+    nl, format('As you use ~w... ', [Object]), format('You feel the power of the medicine.. Your Health is increased by ~w!', [Rate]), nl,
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
 
 print_increase_hunger(Object, Rate) :-
-    format('As you eat ~w... ', [Object]), format('You don\'t feel hungry anymore.. Your Hunger is increased by ~w!', [Rate]), nl,
-    player(_,_,_,Hunger,_,_,_), format('Your Hunger now is ~w', [Hunger]).
+    nl, format('As you eat ~w... ', [Object]), format('You don\'t feel hungry anymore.. Your Hunger is increased by ~w!', [Rate]), nl,
+    player(_,_,_,Hunger,_,_,_), format('Your Hunger now is ~w', [Hunger]), nl.
 
 print_increase_thirst(Object, Rate) :-
-    format('As you drink ~w... ', [Object]), format('You don\'t feel thirsty anymore.. Your Thirst is increased by ~w!', [Rate]), nl,
-    player(_,_,_,_,Thirst,_,_), format('Your Thirst now is ~w', [Thirst]).
+    nl, format('As you drink ~w... ', [Object]), format('You don\'t feel thirsty anymore.. Your Thirst is increased by ~w!', [Rate]), nl,
+    player(_,_,_,_,Thirst,_,_), format('Your Thirst now is ~w', [Thirst]), nl.
 
 print_decrease_health(Amount) :-
     format('You took ~w damage from your enemy... Urgh it\'s hurt!', [Amount]), nl,
-    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]).
+    player(_,_,Health,_,_,_,_), format('Your Health now is ~w', [Health]), nl.
 
 print_inflict_damage(Amount):-
     format('You deal ~w damage to the enemy!', [Amount]),nl.
@@ -331,6 +322,7 @@ print_fail_kill :-
 print_enemy_kill :-
     write('You laugh hilariously as you see your enemy dropout from ITB.. How cruel of you!'), nl.
 
+/*********** BONUS ***********/
 /* print for pray */
 print_good_kid :- write('Because you are a good kid, God answers your prayer... '), nl.
 
@@ -338,4 +330,8 @@ print_give_radar :-
     write('God gives you a Radar so you can see you map!'), nl.
 
 print_give_ult_weapon :-
-    write('God gives you a ultimate weapon (mapres) so you can see you map!'), nl.
+    write('God gives you a ultimate weapon (mapres) so you can kill all your enemies!'), nl.
+
+/* print tugas besar */
+print_tugas_besar :-
+    write('As you call tugas besar, your health decreased by 20.. But it makes your nearby enemies dropout from ITB!'), nl.
